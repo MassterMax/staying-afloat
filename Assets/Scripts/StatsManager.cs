@@ -3,6 +3,7 @@ using System;
 
 public class StatsManager : MonoBehaviour
 {
+    private float maxEnergy = 100;
     private float energy = 100;
     private float energyIncrease = 0;
     private float health = 100;
@@ -17,6 +18,8 @@ public class StatsManager : MonoBehaviour
     public void AddEnergy(float amount)
     {
         energy += amount;
+        if (energy > maxEnergy)
+            energy = maxEnergy;
         OnEnergyChanged?.Invoke();
     }
 

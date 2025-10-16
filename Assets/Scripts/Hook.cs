@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Hook : MonoBehaviour
+public class Hook : Offable
 {
     private const float ENERGY_COST = 1f;
     Vector2 clickPoint;
@@ -17,8 +18,9 @@ public class Hook : MonoBehaviour
     private Vector3 wireStartPoint;
     [SerializeField] Transform wireTransform;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         originalPosition = transform.position;
         rotatable = GetComponent<Rotatable>();
         rotatable.CanRotate = true;
@@ -35,12 +37,22 @@ public class Hook : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(launchKey) && !isMovingToClicked && !isReturning && statsManager.TryConsumeEnergy(ENERGY_COST))
+        if (!IsOn)
+            return;
+
+        // Проверка: если курсор над UI, не запускаем хук
+        if (Input.GetKeyDown(launchKey) && !isMovingToClicked && !isReturning)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            clickPoint = mousePos;
-            isMovingToClicked = true;
-            rotatable.CanRotate = false;
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            if (statsManager.TryConsumeEnergy(ENERGY_COST))
+            {
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                clickPoint = mousePos;
+                isMovingToClicked = true;
+                rotatable.CanRotate = false;
+            }
         }
 
         if (isMovingToClicked)
@@ -121,5 +133,21 @@ public class Hook : MonoBehaviour
             isMovingToClicked = false;
             isReturning = true;
         }
+    }
+
+    public override bool TryOff()
+    {
+        if (isMovingToClicked || isReturning)
+        {
+            return false;
+        }
+        rotatable.CanRotate = false;
+        return base.TryOff();
+    }
+
+    public override void On()
+    {
+        base.On();
+        rotatable.CanRotate = true;
     }
 }
