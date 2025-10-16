@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button hookButton;
     TextMeshProUGUI hookButtonText;
 
+    [SerializeField] Slider energySlider;
+
     [SerializeField] Button gunButton;
     TextMeshProUGUI gunButtonText;
 
@@ -30,6 +32,9 @@ public class UIManager : MonoBehaviour
         gunButton.onClick.AddListener(OnGunButtonClicked);
         gunButtonText = gunButton.GetComponentInChildren<TextMeshProUGUI>();
         UpdateGunText();
+
+        energySlider.onValueChanged.AddListener(OnSliderValueChanged);
+        energySlider.value = 0.2f;
     }
 
     void OnDestroy()
@@ -79,5 +84,11 @@ public class UIManager : MonoBehaviour
             gunButtonText.text = "Gun is On";
         else
             gunButtonText.text = "Gun is Off";
+    }
+
+    void OnSliderValueChanged(float value)
+    {
+        energyPartsController.SetShipEngine(value);
+        UpdateEnergyIncreaseUI();
     }
 }
