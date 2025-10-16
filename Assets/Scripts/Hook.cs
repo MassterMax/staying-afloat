@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour
 {
-    private const float ENERGY_COST = 10f;
+    private const float ENERGY_COST = 1f;
     Vector2 clickPoint;
     public float speed = 10f;
     public KeyCode launchKey = KeyCode.Mouse0;
@@ -14,6 +14,8 @@ public class Hook : MonoBehaviour
     Rotatable rotatable;
     StatsManager statsManager;
 
+    private Vector3 wireStartPoint;
+    [SerializeField] Transform wireTransform;
 
     void Start()
     {
@@ -21,6 +23,14 @@ public class Hook : MonoBehaviour
         rotatable = GetComponent<Rotatable>();
         rotatable.CanRotate = true;
         statsManager = FindAnyObjectByType<StatsManager>();
+        wireStartPoint = transform.position;
+        ResetWire();
+    }
+
+    void ResetWire()
+    {
+        wireTransform.position = wireStartPoint;
+        wireTransform.localScale = new Vector3(0, wireTransform.localScale.y, wireTransform.localScale.z);
     }
 
     void Update()
@@ -41,6 +51,8 @@ public class Hook : MonoBehaviour
         {
             ReturnBack();
         }
+
+        UpdateWire();
     }
 
     void MoveToClicked()
@@ -70,7 +82,32 @@ public class Hook : MonoBehaviour
                 grabbedObject = null;
             }
             rotatable.CanRotate = true;
+            ResetWire();
         }
+    }
+
+    void UpdateWire()
+    {
+        if (!isMovingToClicked && !isReturning)
+        {
+            return;
+        }
+        Vector3 start = wireStartPoint;
+        Vector3 end = transform.position;
+        Vector3 dir = end - start;
+        dir.z = 0;
+        float distance = dir.magnitude;
+
+        // Позиция Wire — середина между стартом и хуком
+        wireTransform.position = start + dir * 0.5f;
+
+        // Поворот Wire — в сторону хука
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        wireTransform.rotation = Quaternion.Euler(0, 0, angle);
+
+        Vector3 scale = wireTransform.localScale;
+        scale.x = distance * 3.5f;
+        wireTransform.localScale = scale;
     }
 
     void OnTriggerEnter2D(Collider2D other)
