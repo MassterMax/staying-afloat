@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     StatsManager statsManager;
     EnergyPartsController energyPartsController;
 
+    float defaultSliderValue = 0.15f;
+
     void Awake()
     {
         statsManager = FindAnyObjectByType<StatsManager>();
@@ -39,10 +41,14 @@ public class UIManager : MonoBehaviour
         UpdateGunText();
 
         energySlider.onValueChanged.AddListener(OnSliderValueChanged);
-        energySlider.value = 0.2f;
 
-        UpdateDistanceUI();
-        UpdateDistanceIncreaseUI();
+        // UpdateDistanceUI();
+        // UpdateDistanceIncreaseUI();
+    }
+
+    void Start()
+    {
+        energySlider.value = defaultSliderValue;
     }
 
     void OnDestroy()
@@ -75,6 +81,7 @@ public class UIManager : MonoBehaviour
 
     void UpdateDistanceIncreaseUI()
     {
+        Debug.Log("Updating distance increase UI");
         string distanceIncreaseSymbol = statsManager.RealDistanceIncrease > 0 ? "+" : "";
         distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString("F1") + "/s";
     }
@@ -109,6 +116,7 @@ public class UIManager : MonoBehaviour
 
     void OnSliderValueChanged(float value)
     {
+        Debug.Log("Slider value changed: " + value);
         energyPartsController.SetShipEngine(value);
         UpdateEnergyIncreaseUI();
     }

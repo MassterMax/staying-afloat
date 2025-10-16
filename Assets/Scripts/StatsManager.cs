@@ -49,8 +49,8 @@ public class StatsManager : MonoBehaviour
 
     public void SetBaseDistanceIncrease(float amount)
     {
+        Debug.Log("Setting base distance increase: " + amount);
         baseDistanceIncrease = amount;
-        OnDistanceIncreaseChanged?.Invoke();
     }
 
     void Reset()
@@ -66,7 +66,6 @@ public class StatsManager : MonoBehaviour
         OnEnergyChanged?.Invoke();
         OnEnergyIncreaseChanged?.Invoke();
         OnDistanceChanged?.Invoke();
-        OnDistanceIncreaseChanged?.Invoke();
         energyPartsController = FindFirstObjectByType<EnergyPartsController>();
         uiManager = FindFirstObjectByType<UIManager>();
     }
@@ -74,7 +73,12 @@ public class StatsManager : MonoBehaviour
     void CalculateDistance()
     {
         // TODO calculate with baseDistanceIncrease, distance and black hole effect
-        realDistanceIncrease = baseDistanceIncrease; // TODO add black hole effect
+        // realDistanceIncrease = baseDistanceIncrease; // TODO add black hole effect
+        if (realDistanceIncrease != baseDistanceIncrease)
+        {
+            realDistanceIncrease = baseDistanceIncrease;
+            OnDistanceIncreaseChanged?.Invoke();
+        }
         distance += baseDistanceIncrease * Time.fixedDeltaTime;
         if (distance < 0)
         {

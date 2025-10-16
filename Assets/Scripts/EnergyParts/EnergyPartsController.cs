@@ -95,7 +95,7 @@ public class EnergyPartsController : MonoBehaviour
 
     public void SetShipEngine(float value)
     {
-        if (value <= 0.1f)
+        if (value <= 0.05f)  // Dead zone to turn off the engine
         {
             engineEnergyValue = 0f;
             shipEngine.TurnOff();

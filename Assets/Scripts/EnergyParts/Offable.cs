@@ -17,12 +17,12 @@ public class Offable : MonoBehaviour
 
     protected virtual void Start()
     {
-        Debug.Log("SpriteRenderer found: " + (spriteRenderer != null));
+        // Debug.Log("SpriteRenderer found: " + (spriteRenderer != null));
     }
 
     public virtual bool TryOff()
     {
-        Debug.Log("SpriteRenderer in TryOff: " + (spriteRenderer != null));
+        // Debug.Log("SpriteRenderer in TryOff: " + (spriteRenderer != null));
 
         turnedOn = false;
         spriteRenderer.color = turnedOffColor;
