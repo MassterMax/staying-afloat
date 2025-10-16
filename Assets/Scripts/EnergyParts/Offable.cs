@@ -9,10 +9,14 @@ public class Offable : MonoBehaviour
     public bool IsOn => turnedOn;
     SpriteRenderer spriteRenderer;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+    }
+
+    protected virtual void Start()
+    {
         Debug.Log("SpriteRenderer found: " + (spriteRenderer != null));
     }
 

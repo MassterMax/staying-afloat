@@ -3,15 +3,18 @@ using UnityEngine;
 
 public class EnergyPartsController : MonoBehaviour
 {
-    private float maxEngineEnergyCost = 5f;
-    private float engineEnergyCoef = 1.5f;
-    private float engineEnergyValue = 0f;
     private float gunConsumptionRate = 10f; // Energy consumed per second when the gun is on
     private float hookConsumptionRate = 5f; // Energy consumed per second when the hook is on
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
     StatsManager statsManager;
     Hook hook;
     Gun gun;
+
+    // distance variables
+    private float maxEngineEnergyCost = 5f;
+    private float engineEnergyCoef = 1.5f;
+    private float engineEnergyValue = 0f; // from 0 to 1
+    private float maxEngineSpeed = 10f; // maximum speed of the engine
     ShipEngine shipEngine;
 
     void Awake()
@@ -23,7 +26,14 @@ public class EnergyPartsController : MonoBehaviour
     }
     void Start()
     {
+        // hook.ForceOff();
+        // gun.TryOff();
         SetEnergyIncrease();
+    }
+
+    public float GetShipEngineConsumptionRate()
+    {
+        return Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef);
     }
 
     void SetEnergyIncrease()
@@ -75,11 +85,12 @@ public class EnergyPartsController : MonoBehaviour
         gun.TryOff();
         SetShipEngine(0f);
         SetEnergyIncrease();
+        // statsManager.
     }
 
-    public float GetShipEngineConsumptionRate()
+    void SetDistanceIncrease()
     {
-        return Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef);
+        statsManager.SetBaseDistanceIncrease(engineEnergyValue * maxEngineSpeed);
     }
 
     public void SetShipEngine(float value)
@@ -95,5 +106,6 @@ public class EnergyPartsController : MonoBehaviour
             shipEngine.TurnOn();
         }
         SetEnergyIncrease();
+        SetDistanceIncrease();
     }
 }

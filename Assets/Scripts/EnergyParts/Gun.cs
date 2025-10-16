@@ -4,10 +4,15 @@ public class Gun : Offable
 {
     Rotatable rotatable;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        rotatable = GetComponent<Rotatable>();
+    }
+
     protected override void Start()
     {
         base.Start();
-        rotatable = GetComponent<Rotatable>();
     }
 
     void Update()

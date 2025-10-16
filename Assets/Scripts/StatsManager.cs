@@ -4,18 +4,24 @@ using System;
 public class StatsManager : MonoBehaviour
 {
     EnergyPartsController energyPartsController;
+    UIManager uiManager;
     private float maxEnergy = 100;
     private float energy = 100;
     private float energyIncrease = 0; // per second
     private float health = 100;
     private float distance = 100;
+    private float baseDistanceIncrease = 0; // per second
+    private float realDistanceIncrease = 0; // per second, with black hole effect
     public event Action OnEnergyChanged;
     public event Action OnEnergyIncreaseChanged;
+    public event Action OnDistanceChanged;
+    public event Action OnDistanceIncreaseChanged;
 
     public float Energy => energy;
     public float EnergyIncrease => energyIncrease;
-    public float Health => health;
     public float Distance => distance;
+    public float RealDistanceIncrease => realDistanceIncrease;
+    // public float Health => health;
     // public int PlayerScore => playerScore;
     // public int AntagonistScore => antagonistScore;
     void AddEnergy(float amount)
@@ -28,16 +34,12 @@ public class StatsManager : MonoBehaviour
             energy = 0;
             Debug.LogWarning("Shutdown systems");
             energyPartsController.TurnOffAll();
-            // call systems shutdown
+            uiManager.ForceTurnOffControls();
         }
         OnEnergyChanged?.Invoke();
     }
 
-    // public void SubtractEnergy(float amount)
-    // {
-    //     energy -= amount;
-    //     OnEnergyChanged?.Invoke();
-    // }
+
 
     public void SetEnergyIncrease(float amount)
     {
@@ -45,11 +47,42 @@ public class StatsManager : MonoBehaviour
         OnEnergyIncreaseChanged?.Invoke();
     }
 
+    public void SetBaseDistanceIncrease(float amount)
+    {
+        baseDistanceIncrease = amount;
+        OnDistanceIncreaseChanged?.Invoke();
+    }
+
+    void Reset()
+    {
+        energy = maxEnergy;
+        distance = 100;
+        health = 100;
+    }
+
     void Start()
     {
+        Reset();
         OnEnergyChanged?.Invoke();
         OnEnergyIncreaseChanged?.Invoke();
+        OnDistanceChanged?.Invoke();
+        OnDistanceIncreaseChanged?.Invoke();
         energyPartsController = FindFirstObjectByType<EnergyPartsController>();
+        uiManager = FindFirstObjectByType<UIManager>();
+    }
+
+    void CalculateDistance()
+    {
+        // TODO calculate with baseDistanceIncrease, distance and black hole effect
+        realDistanceIncrease = baseDistanceIncrease; // TODO add black hole effect
+        distance += baseDistanceIncrease * Time.fixedDeltaTime;
+        if (distance < 0)
+        {
+            distance = 0;
+            Debug.LogWarning("You lose!!!!!!!!!!!!!");
+            // handle lose
+        }
+        OnDistanceChanged?.Invoke();
     }
 
     void FixedUpdate()
@@ -58,5 +91,6 @@ public class StatsManager : MonoBehaviour
         {
             AddEnergy(energyIncrease * Time.fixedDeltaTime);
         }
+        CalculateDistance();
     }
 }

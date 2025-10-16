@@ -7,6 +7,9 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI energyIncreaseText;
+    [SerializeField] TextMeshProUGUI distanceText;
+    [SerializeField] TextMeshProUGUI distanceIncreaseText;
+
     [SerializeField] Button hookButton;
     TextMeshProUGUI hookButtonText;
 
@@ -24,6 +27,8 @@ public class UIManager : MonoBehaviour
         energyPartsController = FindAnyObjectByType<EnergyPartsController>();
         statsManager.OnEnergyChanged += UpdateEnergyUI;
         statsManager.OnEnergyIncreaseChanged += UpdateEnergyIncreaseUI;
+        statsManager.OnDistanceChanged += UpdateDistanceUI;
+        statsManager.OnDistanceIncreaseChanged += UpdateDistanceIncreaseUI;
 
         hookButton.onClick.AddListener(OnHookButtonClicked);
         hookButtonText = hookButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -35,6 +40,9 @@ public class UIManager : MonoBehaviour
 
         energySlider.onValueChanged.AddListener(OnSliderValueChanged);
         energySlider.value = 0.2f;
+
+        UpdateDistanceUI();
+        UpdateDistanceIncreaseUI();
     }
 
     void OnDestroy()
@@ -43,6 +51,8 @@ public class UIManager : MonoBehaviour
         {
             statsManager.OnEnergyChanged -= UpdateEnergyUI;
             statsManager.OnEnergyIncreaseChanged -= UpdateEnergyIncreaseUI;
+            statsManager.OnDistanceChanged -= UpdateDistanceUI;
+            statsManager.OnDistanceIncreaseChanged -= UpdateDistanceIncreaseUI;
         }
     }
 
@@ -56,6 +66,17 @@ public class UIManager : MonoBehaviour
     {
         string energyIncreaseSymbol = statsManager.EnergyIncrease > 0 ? "+" : "";
         energyIncreaseText.text = energyIncreaseSymbol + statsManager.EnergyIncrease.ToString("F1") + "/s";
+    }
+
+    void UpdateDistanceUI()
+    {
+        distanceText.text = statsManager.Distance.ToString("F1");
+    }
+
+    void UpdateDistanceIncreaseUI()
+    {
+        string distanceIncreaseSymbol = statsManager.RealDistanceIncrease > 0 ? "+" : "";
+        distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString("F1") + "/s";
     }
 
     void OnHookButtonClicked()
@@ -90,5 +111,12 @@ public class UIManager : MonoBehaviour
     {
         energyPartsController.SetShipEngine(value);
         UpdateEnergyIncreaseUI();
+    }
+
+    public void ForceTurnOffControls()
+    {
+        UpdateHookText();
+        UpdateGunText();
+        energySlider.value = 0f;
     }
 }

@@ -17,13 +17,18 @@ public class Hook : Offable
     private Vector3 wireStartPoint;
     [SerializeField] Transform wireTransform;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        rotatable = GetComponent<Rotatable>();
+        statsManager = FindAnyObjectByType<StatsManager>();
+    }
+
     protected override void Start()
     {
         base.Start();
         originalPosition = transform.position;
-        rotatable = GetComponent<Rotatable>();
         rotatable.CanRotate = true;
-        statsManager = FindAnyObjectByType<StatsManager>();
         wireStartPoint = transform.position;
         ResetWire();
     }
@@ -143,7 +148,7 @@ public class Hook : Offable
         rotatable.CanRotate = false;
         return base.TryOff();
     }
-    
+
     public void ForceOff()
     {
         rotatable.CanRotate = false;
