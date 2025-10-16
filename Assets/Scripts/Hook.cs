@@ -3,7 +3,6 @@ using UnityEngine.EventSystems;
 
 public class Hook : Offable
 {
-    private const float ENERGY_COST = 1f;
     Vector2 clickPoint;
     public float speed = 10f;
     public KeyCode launchKey = KeyCode.Mouse0;
@@ -46,13 +45,13 @@ public class Hook : Offable
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            if (statsManager.TryConsumeEnergy(ENERGY_COST))
-            {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                clickPoint = mousePos;
-                isMovingToClicked = true;
-                rotatable.CanRotate = false;
-            }
+            // if (statsManager.TryConsumeEnergy(ENERGY_COST))
+            // {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            clickPoint = mousePos;
+            isMovingToClicked = true;
+            rotatable.CanRotate = false;
+            // }
         }
 
         if (isMovingToClicked)
@@ -144,10 +143,16 @@ public class Hook : Offable
         rotatable.CanRotate = false;
         return base.TryOff();
     }
+    
+    public void ForceOff()
+    {
+        rotatable.CanRotate = false;
+        base.TryOff();
+    }
 
     public override void On()
     {
         base.On();
-        rotatable.CanRotate = true;
+        rotatable.CanRotate = !isMovingToClicked && !isReturning;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI energyText;
+    [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] Button hookButton;
     TextMeshProUGUI hookButtonText;
 
@@ -15,12 +16,13 @@ public class UIManager : MonoBehaviour
     StatsManager statsManager;
     EnergyPartsController energyPartsController;
 
-
-    void Start()
+    void Awake()
     {
         statsManager = FindAnyObjectByType<StatsManager>();
         energyPartsController = FindAnyObjectByType<EnergyPartsController>();
         statsManager.OnEnergyChanged += UpdateEnergyUI;
+        statsManager.OnEnergyIncreaseChanged += UpdateEnergyIncreaseUI;
+
         hookButton.onClick.AddListener(OnHookButtonClicked);
         hookButtonText = hookButton.GetComponentInChildren<TextMeshProUGUI>();
         UpdateHookText();
@@ -33,12 +35,22 @@ public class UIManager : MonoBehaviour
     void OnDestroy()
     {
         if (statsManager != null)
+        {
             statsManager.OnEnergyChanged -= UpdateEnergyUI;
+            statsManager.OnEnergyIncreaseChanged -= UpdateEnergyIncreaseUI;
+        }
     }
 
     void UpdateEnergyUI()
     {
-        energyText.text = statsManager.Energy.ToString() + "%";
+        // округляем до десятых
+        energyText.text = statsManager.Energy.ToString("F1");
+    }
+
+    void UpdateEnergyIncreaseUI()
+    {
+        string energyIncreaseSymbol = statsManager.EnergyIncrease > 0 ? "+" : "";
+        energyIncreaseText.text = energyIncreaseSymbol + statsManager.EnergyIncrease.ToString("F1") + "/s";
     }
 
     void OnHookButtonClicked()
