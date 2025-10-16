@@ -74,12 +74,13 @@ public class StatsManager : MonoBehaviour
     {
         // TODO calculate with baseDistanceIncrease, distance and black hole effect
         // realDistanceIncrease = baseDistanceIncrease; // TODO add black hole effect
-        if (realDistanceIncrease != baseDistanceIncrease)
+        float newRealDistanceIncrease = baseDistanceIncrease + energyPartsController.GetBlackHoleSpeed(distance);
+        if (realDistanceIncrease != newRealDistanceIncrease)
         {
-            realDistanceIncrease = baseDistanceIncrease;
+            realDistanceIncrease = newRealDistanceIncrease;
             OnDistanceIncreaseChanged?.Invoke();
         }
-        distance += baseDistanceIncrease * Time.fixedDeltaTime;
+        distance += realDistanceIncrease * Time.fixedDeltaTime;
         if (distance < 0)
         {
             distance = 0;

@@ -16,6 +16,7 @@ public class EnergyPartsController : MonoBehaviour
     private float engineEnergyValue = 0f; // from 0 to 1
     private float maxEngineSpeed = 10f; // maximum speed of the engine
     ShipEngine shipEngine;
+    private float blackHoleBaseSpeed = 10f;
 
     void Awake()
     {
@@ -34,6 +35,16 @@ public class EnergyPartsController : MonoBehaviour
     public float GetShipEngineConsumptionRate()
     {
         return Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef);
+    }
+
+    public float GetBlackHoleSpeed(float distance)
+    {
+        return -5f;
+        // if (distance >= 100f)
+        //     return 1f; // No effect
+        // if (distance <= 66f)
+        //     return 5f;
+        // return blackHoleBaseSpeed / (distance * distance);
     }
 
     void SetEnergyIncrease()
