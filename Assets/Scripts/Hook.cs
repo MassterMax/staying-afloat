@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour
 {
+    private const float ENERGY_COST = 10f;
     Vector2 clickPoint;
     public float speed = 10f;
     public KeyCode launchKey = KeyCode.Mouse0;
@@ -11,17 +12,20 @@ public class Hook : MonoBehaviour
     private Vector3 originalPosition;
 
     Rotatable rotatable;
+    StatsManager statsManager;
+
 
     void Start()
     {
         originalPosition = transform.position;
         rotatable = GetComponent<Rotatable>();
         rotatable.CanRotate = true;
+        statsManager = FindAnyObjectByType<StatsManager>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(launchKey) && !isMovingToClicked && !isReturning)
+        if (Input.GetKeyDown(launchKey) && !isMovingToClicked && !isReturning && statsManager.TryConsumeEnergy(ENERGY_COST))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             clickPoint = mousePos;
