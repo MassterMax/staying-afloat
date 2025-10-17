@@ -36,14 +36,13 @@ public class Gun : Offable
             if (statsManager.TryConsumeEnergy(AllStatsContainer.Instance.GunEnergyCost))
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                // todo spawn bullet towards mousePos
-                // spawn bullet towards mousePos
+
                 Vector2 origin = (Vector2)transform.position;
                 Vector2 dir = (mousePos - origin).normalized;
 
                 if (bulletPrefab != null)
                 {
-                    GameObject go = Instantiate(bulletPrefab, origin, Quaternion.identity);
+                    GameObject go = Instantiate(bulletPrefab, origin + dir * 0.5f, Quaternion.identity);
                     go.transform.up = dir;
                     LaserShot shot = go.GetComponent<LaserShot>();
                     if (shot != null)

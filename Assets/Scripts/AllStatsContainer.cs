@@ -17,7 +17,7 @@ public class AllStatsContainer : MonoBehaviour
     private float gunShotDelay = 0.5f; // delay between gun shots
     private float hookExtraDistance = 0.5f; // extra distance added to hook target point
     private float gunShotSpeed = 15f;
-    private float gunShotLifetime = 4f;
+    private float gunShotLifetime = 1.5f;
 
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
