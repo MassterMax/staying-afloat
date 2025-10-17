@@ -3,9 +3,10 @@ Shader "Custom/HorizontalBlackHole"
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
-        _BlackHoleX("Black Hole X", Range(0,1)) = 0.8
+        _BlackHoleX("Black Hole X", Range(0,1)) = 1.0
         _StrengthX("Horizontal Strength", Range(0,1)) = 0.5
         _StrengthY("Vertical Warp", Range(0,1)) = 0.3
+        _SqueezeY("Vertical Squeeze", Range(0,1)) = 0.2
     }
     SubShader
     {
@@ -23,6 +24,7 @@ Shader "Custom/HorizontalBlackHole"
             float _BlackHoleX;
             float _StrengthX;
             float _StrengthY;
+            float _SqueezeY;
 
             struct v2f
             {
@@ -42,13 +44,18 @@ Shader "Custom/HorizontalBlackHole"
             {
                 float2 uv = i.uv;
 
-                // Горизонтальное всасывание к чёрной дыре
+                // Горизонтальное всасывание
                 float dx = _BlackHoleX - uv.x;
                 uv.x += dx * _StrengthX;
 
-                // Вертикальное искривление (вогнутость)
+                // Вогнутость по вертикали
                 float distX = abs(dx);
-                uv.y += (0.5 - uv.y) * _StrengthY * (1.0 - distX); // ближе к дыре сильнее вогнутость
+                uv.y += (0.5 - uv.y) * _StrengthY * (1.0 - distX);
+
+                // Сжатие по вертикали
+                float centerY = 0.5;
+                uv.y = centerY + (uv.y - centerY) * (1.0 - _SqueezeY * _StrengthX); 
+                // Чем больше strengthX, тем сильнее сжатие
 
                 uv = clamp(uv, 0.0, 1.0);
                 return tex2D(_MainTex, uv);
