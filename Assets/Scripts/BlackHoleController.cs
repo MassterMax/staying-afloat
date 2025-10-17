@@ -12,8 +12,14 @@ public class BlackHoleController : MonoBehaviour
     void Awake()
     {
         statsManager = GetComponent<StatsManager>();
-        scrollingBackground = FindFirstObjectByType<ScrollingBackground>();
+        // scrollingBackground = FindFirstObjectByType<ScrollingBackground>();
         statsManager.OnDistanceIncreaseChanged += UpdateDistanceIncreaseBG;
+    }
+
+    void Start()
+    {
+        scrollingBackground = FindFirstObjectByType<ScrollingBackground>();
+        UpdateDistanceIncreaseBG();
     }
 
     // Update is called once per frame
@@ -34,6 +40,16 @@ public class BlackHoleController : MonoBehaviour
     {
         float val = statsManager.RealDistanceIncrease;
         Debug.Log("Updating background speed based on distance increase: " + val);
+        if (scrollingBackground == null)
+        {
+            scrollingBackground = FindFirstObjectByType<ScrollingBackground>();
+            if (scrollingBackground == null)
+            {
+                Debug.LogWarning("ScrollingBackground not found - can't update background speed yet.");
+                return;
+            }
+        }
+
         if (Mathf.Abs(val) < 0.1f)
             scrollingBackground.SetSpeed(0);
         else if (val < 0)

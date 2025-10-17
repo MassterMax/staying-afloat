@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    const string FLOAT_VALUE_FORMAT = "F2";
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] TextMeshProUGUI distanceText;
@@ -62,25 +63,25 @@ public class UIManager : MonoBehaviour
     void UpdateEnergyUI()
     {
         // округляем до десятых
-        energyText.text = statsManager.Energy.ToString("F1");
+        energyText.text = statsManager.Energy.ToString(FLOAT_VALUE_FORMAT);
     }
 
     void UpdateEnergyIncreaseUI()
     {
         string energyIncreaseSymbol = statsManager.EnergyIncrease > 0 ? "+" : "";
-        energyIncreaseText.text = energyIncreaseSymbol + statsManager.EnergyIncrease.ToString("F1") + "/s";
+        energyIncreaseText.text = energyIncreaseSymbol + statsManager.EnergyIncrease.ToString(FLOAT_VALUE_FORMAT) + "/s";
     }
 
     void UpdateDistanceUI()
     {
-        distanceText.text = statsManager.Distance.ToString("F1");
+        distanceText.text = statsManager.Distance.ToString(FLOAT_VALUE_FORMAT);
     }
 
     void UpdateDistanceIncreaseUI()
     {
         Debug.Log("Updating distance increase UI");
         string distanceIncreaseSymbol = statsManager.RealDistanceIncrease > 0 ? "+" : "";
-        distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString("F1") + "/s";
+        distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString(FLOAT_VALUE_FORMAT) + "/s";
     }
 
     void OnHookButtonClicked()

@@ -65,6 +65,10 @@ public class StatsManager : MonoBehaviour
         OnEnergyChanged?.Invoke();
         OnEnergyIncreaseChanged?.Invoke();
         OnDistanceChanged?.Invoke();
+
+        realDistanceIncrease = baseDistanceIncrease + AllStatsContainer.Instance.GetBlackHoleSpeed(distance);
+        OnDistanceIncreaseChanged?.Invoke();
+
         energyPartsController = FindFirstObjectByType<EnergyPartsController>();
         uiManager = FindFirstObjectByType<UIManager>();
     }
