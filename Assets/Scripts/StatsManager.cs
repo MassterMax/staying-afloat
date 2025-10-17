@@ -8,7 +8,7 @@ public class StatsManager : MonoBehaviour
     private float maxEnergy = 100;
     private float energy = 100;
     private float energyIncrease = 0; // per second
-    private float health = 100;
+    // private float health = 100;
     private float distance = 100;
     private float baseDistanceIncrease = 0; // per second
     private float realDistanceIncrease = 0; // per second, with black hole effect
@@ -57,7 +57,7 @@ public class StatsManager : MonoBehaviour
     {
         energy = maxEnergy;
         distance = 100;
-        health = 100;
+        // health = 100;
     }
 
     void Start()
@@ -69,6 +69,9 @@ public class StatsManager : MonoBehaviour
         energyPartsController = FindFirstObjectByType<EnergyPartsController>();
         uiManager = FindFirstObjectByType<UIManager>();
     }
+
+    void OnEnable() => Box.OnPickedUp += HandlePickup;
+    void OnDisable() => Box.OnPickedUp -= HandlePickup;
 
     void CalculateDistance()
     {
@@ -98,4 +101,11 @@ public class StatsManager : MonoBehaviour
         }
         CalculateDistance();
     }
+
+    void HandlePickup(float energy)
+    {
+        Debug.Log("Picked up energy: " + energy);
+        AddEnergy(energy);
+    }
+
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class EnergyPartsController : MonoBehaviour
 {
-    private float gunConsumptionRate = 10f; // Energy consumed per second when the gun is on
-    private float hookConsumptionRate = 5f; // Energy consumed per second when the hook is on
+    private float gunConsumptionRate = 3f; // Energy consumed per second when the gun is on
+    private float hookConsumptionRate = 2f; // Energy consumed per second when the hook is on
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
     StatsManager statsManager;
     Hook hook;
