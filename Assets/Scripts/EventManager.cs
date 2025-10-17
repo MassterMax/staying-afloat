@@ -4,7 +4,7 @@ public class EventManager : MonoBehaviour
 {
     [SerializeField] GameObject boxPrefab;
     float minTimeToNextEvent = 5f;
-    float maxTimeToNextEvent = 15f;
+    float maxTimeToNextEvent = 10f;
     float timeToNextEvent = 10f;
     float timer = 0f;
 
