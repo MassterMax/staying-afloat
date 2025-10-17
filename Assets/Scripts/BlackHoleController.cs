@@ -4,7 +4,7 @@ using UnityEngine;
 public class BlackHoleController : MonoBehaviour
 {
     [SerializeField] GameObject blackHole;
-    float minScale = 0.1f; // distance = 100 or more
+    float minScale = 0.05f; // distance = 100 or more
     float maxScale = 1.0f; // distance = 0 or less
     StatsManager statsManager;
     ScrollingBackground scrollingBackground;
