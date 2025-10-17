@@ -998,7 +998,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a04b348373d3444be73ba13fef6d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   launchKey: 323
   wireTransform: {fileID: 2139260408}
 --- !u!50 &979299138
@@ -1897,6 +1896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfcb1a4e1ea804041ba4438c43a29c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5155365809774676380, guid: 1af87a1214e583c4d9a1dc9231dca340, type: 3}
 --- !u!1 &1658534674
 GameObject:
   m_ObjectHideFlags: 0
