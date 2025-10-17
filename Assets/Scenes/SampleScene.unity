@@ -355,13 +355,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 520b7e4af49684d4b9b0c0fa1bbcb3ca, type: 3}
+  m_Script: {fileID: 11500000, guid: c76c7ce95af6b484c8117a56ad3dc02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: f485d7d171f870549acdaedcb1fdaada, type: 2}
-  distortionStrength: 0.1
-  blackHoleScreenPos: {x: 1, y: 0.5}
+  debugDistance: 100
+  blackHolePos: {x: 0, y: 0}
+  material: {fileID: 2100000, guid: 4dff83f14775b5640bb00bfa10b62154, type: 2}
+  distortion: 0
   collapse: 0
+  blackHoleEdge: 0.3
 --- !u!1 &640355458
 GameObject:
   m_ObjectHideFlags: 0

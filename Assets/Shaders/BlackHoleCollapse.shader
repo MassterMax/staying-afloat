@@ -6,14 +6,15 @@ Shader "Custom/BlackHoleCollapse"
         _Collapse ("Collapse", Range(0,1)) = 0
         _Distortion ("Distortion", Range(0,1)) = 0
         _BlackHolePos ("Black Hole Pos", Vector) = (0.5,0.5,0,0)
+        _EdgeSoftness ("Edge Softness", Range(0.01,1)) = 0.2
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
-        ZTest Always Cull Off ZWrite Off
-
+        LOD 100
         Pass
         {
+            ZTest Always Cull Off ZWrite Off
             CGPROGRAM
             #pragma vertex vert_img
             #pragma fragment frag
@@ -23,6 +24,7 @@ Shader "Custom/BlackHoleCollapse"
             float _Collapse;
             float _Distortion;
             float2 _BlackHolePos;
+            float _EdgeSoftness;
 
             fixed4 frag(v2f_img i) : SV_Target
             {
@@ -30,19 +32,19 @@ Shader "Custom/BlackHoleCollapse"
                 float2 dir = uv - _BlackHolePos;
                 float dist = length(dir);
 
-                // --- Этап 1: гравитационное искажение ---
-                float distort = _Distortion * exp(-dist * 8); // экспоненциальное искривление у центра
-                uv += dir * distort;
+                // 1) Внешнее искажение — экспоненциально убывает с дистанцией
+                float distort = _Distortion * exp(-dist * 8.0);
+                uv += dir * distort * 0.25; // 0.25 — базовый масштаб, можно менять
 
-                // --- Этап 2: схлопывание пространства ---
-                float collapse = smoothstep(0.0, 1.0, _Collapse);
+                // 2) Схлопывание — линейное приближение к центру
+                float collapse = saturate(_Collapse);
                 uv = lerp(uv, _BlackHolePos, collapse);
 
+                // 3) Чёрная область и мягкий край
+                // чем ближе к центру, тем более чёрно; используем smoothstep для мягкости края
+                float blackMask = smoothstep(0.0, _EdgeSoftness, dist - collapse * 0.5);
                 fixed4 col = tex2D(_MainTex, uv);
-
-                // --- Этап 3: чернота по радиусу ---
-                float black = smoothstep(0.5, 0.1, dist - collapse * 0.5);
-                col.rgb *= black;
+                col.rgb *= blackMask;
 
                 return col;
             }
