@@ -8,7 +8,7 @@ public class Hook : Offable
     public KeyCode launchKey = KeyCode.Mouse0;
     private bool isMovingToClicked = false;
     private bool isReturning = false;
-    private GameObject grabbedObject = null;
+    private Pullable grabbedObject = null;
     private Vector3 originalPosition;
 
     Rotatable rotatable;
@@ -95,6 +95,7 @@ public class Hook : Offable
             if (grabbedObject)
             {
                 // Отпустить объект
+                grabbedObject.TryPickup();
                 grabbedObject = null;
             }
             rotatable.CanRotate = true;
@@ -133,7 +134,8 @@ public class Hook : Offable
         if (isMovingToClicked && other.CompareTag("Pullable"))
         {
             Debug.Log("Hooked onto: " + other.gameObject.name);
-            grabbedObject = other.gameObject;
+            grabbedObject = other.GetComponent<Pullable>();
+            grabbedObject.Hook();
             isMovingToClicked = false;
             isReturning = true;
         }
