@@ -3,16 +3,11 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
     [SerializeField] GameObject boxPrefab;
+    [SerializeField] GameObject asteroidPrefab;
     float minTimeToNextEvent = 3f;
     float maxTimeToNextEvent = 8f;
     float timeToNextEvent;
     float timer = 0f;
-
-    [Header("Spawn settings")]
-    [SerializeField] Vector3 spawnOffset = new Vector3(6f, 0f, 0f);
-    [SerializeField] Vector2 targetOffsetRangeX = new Vector2(2f, 6f);
-    [SerializeField] Vector2 targetOffsetRangeY = new Vector2(-1f, 1f);
-    [SerializeField] Vector2 lootRange = new Vector2(5, 30); // энергия в коробке
 
     void Start()
     {
@@ -40,7 +35,23 @@ public class EventManager : MonoBehaviour
     void CreateEvent()
     {
         Debug.Log("Event Created");
-        SpawnBox();
+        float t = Random.Range(0f, 1f);
+        if (t < 0.5f)
+            SpawnAsteroid();
+        else
+            SpawnBox();
+    }
+
+    void SpawnAsteroid()
+    {
+        if (asteroidPrefab == null) return;
+
+        Vector2 spawnPos = GetRandomEllipsePoint();
+        Vector2 targetPos = Vector2.zero; // always to center
+
+        GameObject go = Instantiate(asteroidPrefab, spawnPos, Quaternion.identity);
+        Asteroid asteroidComp = go.GetComponent<Asteroid>();
+        asteroidComp.Init(spawnPos, targetPos);
     }
 
     void SpawnBox()

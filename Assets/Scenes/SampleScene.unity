@@ -459,10 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxPrefab: {fileID: 5632330889384776794, guid: 01754693027f7154792d9ca6e71a934a, type: 3}
-  spawnOffset: {x: 6, y: 0, z: 0}
-  targetOffsetRangeX: {x: 2, y: 6}
-  targetOffsetRangeY: {x: -1, y: 1}
-  lootRange: {x: 5, y: 30}
+  asteroidPrefab: {fileID: 4621953010279466761, guid: 1cb57e653a8bfea43b40ce85ed959845, type: 3}
 --- !u!114 &640355464
 MonoBehaviour:
   m_ObjectHideFlags: 0

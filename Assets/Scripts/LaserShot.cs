@@ -38,17 +38,9 @@ public class LaserShot : MonoBehaviour
     {
         if (other.CompareTag("Meteorite"))
         {
-            // If meteor has an Explodable/Meteor script, call it; otherwise just destroy
-            var explodable = other.GetComponent<MonoBehaviour>(); // generic get
-            var explType = explodable?.GetType().GetMethod("Explode");
-            if (explType != null)
-            {
-                explType.Invoke(explodable, null);
-            }
-            else
-            {
-                Destroy(other.gameObject);
-            }
+            Debug.Log("LaserShot hit meteor: " + other.gameObject.name);
+            // todo spawn hit effect
+            Destroy(other.gameObject);
             Destroy(gameObject);
         }
         else
