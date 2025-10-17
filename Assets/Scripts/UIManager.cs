@@ -11,12 +11,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI distanceIncreaseText;
 
     [SerializeField] Button hookButton;
-    TextMeshProUGUI hookButtonText;
+    [SerializeField] Sprite hookOnSprite;
+    [SerializeField] Sprite hookOffSprite;
 
     [SerializeField] Slider energySlider;
 
     [SerializeField] Button gunButton;
-    TextMeshProUGUI gunButtonText;
+    [SerializeField] Sprite gunOnSprite;
+    [SerializeField] Sprite gunOffSprite;
 
     StatsManager statsManager;
     EnergyPartsController energyPartsController;
@@ -33,12 +35,10 @@ public class UIManager : MonoBehaviour
         statsManager.OnDistanceIncreaseChanged += UpdateDistanceIncreaseUI;
 
         hookButton.onClick.AddListener(OnHookButtonClicked);
-        hookButtonText = hookButton.GetComponentInChildren<TextMeshProUGUI>();
-        UpdateHookText();
+        UpdateHookImage();
 
         gunButton.onClick.AddListener(OnGunButtonClicked);
-        gunButtonText = gunButton.GetComponentInChildren<TextMeshProUGUI>();
-        UpdateGunText();
+        UpdateGunImage();
 
         energySlider.onValueChanged.AddListener(OnSliderValueChanged);
 
@@ -89,29 +89,29 @@ public class UIManager : MonoBehaviour
     void OnHookButtonClicked()
     {
         energyPartsController.ChangeHookState();
-        UpdateHookText();
+        UpdateHookImage();
     }
 
-    private void UpdateHookText()
+    private void UpdateHookImage()
     {
         if (energyPartsController.GetHookState())
-            hookButtonText.text = "Hook is On";
+            hookButton.image.sprite = hookOnSprite;
         else
-            hookButtonText.text = "Hook is Off";
+            hookButton.image.sprite = hookOffSprite;
     }
 
     void OnGunButtonClicked()
     {
         energyPartsController.ChangeGunState();
-        UpdateGunText();
+        UpdateGunImage();
     }
 
-    private void UpdateGunText()
+    private void UpdateGunImage()
     {
         if (energyPartsController.GetGunState())
-            gunButtonText.text = "Gun is On";
+            gunButton.image.sprite = gunOnSprite;
         else
-            gunButtonText.text = "Gun is Off";
+            gunButton.image.sprite = gunOffSprite;
     }
 
     void OnSliderValueChanged(float value)
@@ -123,8 +123,8 @@ public class UIManager : MonoBehaviour
 
     public void ForceTurnOffControls()
     {
-        UpdateHookText();
-        UpdateGunText();
+        UpdateHookImage();
+        UpdateGunImage();
         energySlider.value = 0f;
     }
 }
