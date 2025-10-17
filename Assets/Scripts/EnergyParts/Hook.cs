@@ -49,13 +49,13 @@ public class Hook : Offable
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            // if (statsManager.TryConsumeEnergy(ENERGY_COST))
-            // {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            clickPoint = mousePos;
-            isMovingToClicked = true;
-            rotatable.CanRotate = false;
-            // }
+            if (statsManager.TryConsumeEnergy(AllStatsContainer.Instance.HookEnergyCost))
+            {
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                clickPoint = mousePos;
+                isMovingToClicked = true;
+                rotatable.CanRotate = false;
+            }
         }
 
         if (isMovingToClicked)

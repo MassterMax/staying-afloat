@@ -12,6 +12,7 @@ public class AllStatsContainer : MonoBehaviour
     private float maxEngineSpeed = 5f; // maximum speed of the engine
     private float hookSpeed = 10f;
     float defaultSliderValue = 0.4f;
+    private float hookEnergyCost = 5f; // energy cost per hook launch
 
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
@@ -21,6 +22,7 @@ public class AllStatsContainer : MonoBehaviour
     public float MaxEngineSpeed => maxEngineSpeed;
     public float HookSpeed => hookSpeed;
     public float DefaultSliderValue => defaultSliderValue;
+    public float HookEnergyCost => hookEnergyCost;
 
     public static AllStatsContainer Instance { get; private set; }
 
@@ -56,4 +58,13 @@ public class AllStatsContainer : MonoBehaviour
         return res;
     }
 
+    // estimate is 12.5 energy
+    public float GetBoxEnergy()
+    {
+        float p = Random.Range(0f, 1f);
+        if (p < 0.1f) return 5f;
+        if (p < 0.6f) return 10f;
+        if (p < 0.95f) return 15f;
+        return 30f;
+    }
 }

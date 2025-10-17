@@ -38,6 +38,21 @@ public class StatsManager : MonoBehaviour
         OnEnergyChanged?.Invoke();
     }
 
+    public bool TryConsumeEnergy(float amount)
+    {
+        if (energy > amount)
+        {
+            AddEnergy(-amount);
+            return true;
+        }
+        else
+        {
+            // not enough energy
+            Debug.LogWarning("Not enough energy to consume: " + amount);
+            return false;
+        }
+    }
+
 
 
     public void SetEnergyIncrease(float amount)

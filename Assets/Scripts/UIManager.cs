@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    const string FLOAT_VALUE_FORMAT = "F2";
+    const string FLOAT_VALUE_FORMAT = "F1";
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] TextMeshProUGUI distanceText;

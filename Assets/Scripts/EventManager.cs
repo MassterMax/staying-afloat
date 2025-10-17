@@ -3,9 +3,9 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
     [SerializeField] GameObject boxPrefab;
-    float minTimeToNextEvent = 5f;
-    float maxTimeToNextEvent = 10f;
-    float timeToNextEvent = 10f;
+    float minTimeToNextEvent = 3f;
+    float maxTimeToNextEvent = 8f;
+    float timeToNextEvent;
     float timer = 0f;
 
     [Header("Spawn settings")]
@@ -16,7 +16,7 @@ public class EventManager : MonoBehaviour
 
     void Start()
     {
-
+        timeToNextEvent = Random.Range(minTimeToNextEvent, maxTimeToNextEvent);
     }
 
     // Update is called once per frame
@@ -52,16 +52,8 @@ public class EventManager : MonoBehaviour
 
         GameObject go = Instantiate(boxPrefab, spawnPos, Quaternion.identity);
         Box boxComp = go.GetComponent<Box>();
-        float energyLoot = GetBoxEnergy();
+        float energyLoot = AllStatsContainer.Instance.GetBoxEnergy();
         boxComp.Init(spawnPos, targetPos, null, energyLoot);
-    }
-
-    float GetBoxEnergy()
-    {
-        float p = Random.Range(0f, 1f);
-        if (p < 0.5f) return 5f;
-        else if (p < 0.85f) return 10f;
-        else return 20f;
     }
 
     Vector2 GetRandomEllipsePoint(float minAngle = Mathf.PI / 2f, float maxAngle = 3f * Mathf.PI / 2f, float radiusX = 12f, float radiusY = 8f)
