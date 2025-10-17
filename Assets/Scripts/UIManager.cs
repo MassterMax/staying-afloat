@@ -22,9 +22,6 @@ public class UIManager : MonoBehaviour
 
     StatsManager statsManager;
     EnergyPartsController energyPartsController;
-
-    float defaultSliderValue = 0.15f;
-
     void Awake()
     {
         statsManager = FindAnyObjectByType<StatsManager>();
@@ -48,7 +45,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        energySlider.value = defaultSliderValue;
+        energySlider.value = AllStatsContainer.Instance.DefaultSliderValue;
     }
 
     void OnDestroy()

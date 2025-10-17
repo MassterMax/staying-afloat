@@ -13,9 +13,6 @@ public class BlackHoleController : MonoBehaviour
     {
         statsManager = GetComponent<StatsManager>();
         scrollingBackground = FindFirstObjectByType<ScrollingBackground>();
-    }
-    void Start()
-    {
         statsManager.OnDistanceIncreaseChanged += UpdateDistanceIncreaseBG;
     }
 

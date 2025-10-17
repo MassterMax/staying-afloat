@@ -7,10 +7,11 @@ public class AllStatsContainer : MonoBehaviour
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
     private float maxEnergy = 100;
 
-    private float maxEngineEnergyCost = 5f;
+    private float maxEngineEnergyCost = 4f;
     private float engineEnergyCoef = 1.5f;
-    private float maxEngineSpeed = 10f; // maximum speed of the engine
+    private float maxEngineSpeed = 5f; // maximum speed of the engine
     private float hookSpeed = 10f;
+    float defaultSliderValue = 0.4f;
 
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
@@ -19,6 +20,7 @@ public class AllStatsContainer : MonoBehaviour
     public float MaxEnergy => maxEnergy;
     public float MaxEngineSpeed => maxEngineSpeed;
     public float HookSpeed => hookSpeed;
+    public float DefaultSliderValue => defaultSliderValue;
 
     public static AllStatsContainer Instance { get; private set; }
 
@@ -37,17 +39,21 @@ public class AllStatsContainer : MonoBehaviour
 
     public float GetBlackHoleSpeed(float distance)
     {
-        return -5f;
-        // if (distance >= 100f)
-        //     return 1f; // No effect
-        // if (distance <= 66f)
-        //     return 5f;
-        // return blackHoleBaseSpeed / (distance * distance);
+        // return -5f;
+        if (distance >= 60f)
+            return -2f; // No effect
+        if (distance >= 30f)
+            return -3f;
+        if (distance >= 10f)
+            return -4.5f;
+        return -5.2f;
     }
 
     public float GetShipEngineConsumptionRate(float engineEnergyValue)
     {
-        return Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef);
+        float res = Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef);
+        // Debug.Log("Calculating ship engine consumption rate: " + res);
+        return res;
     }
 
 }
