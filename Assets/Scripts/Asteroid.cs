@@ -37,4 +37,20 @@ public class Asteroid : MonoBehaviour
             // }
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other == null) return;
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Asteroid hit player — apply damage");
+            // TODO: найти компонент здоровья и вызвать ApplyDamage(...) если есть
+            Destroy(gameObject);
+        }
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("OnDestroy1");
+    }
 }
