@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 public class Hook : Offable
 {
     Vector2 clickPoint;
-    public float speed = 10f;
     public KeyCode launchKey = KeyCode.Mouse0;
     private bool isMovingToClicked = false;
     private bool isReturning = false;
@@ -73,7 +72,7 @@ public class Hook : Offable
 
     void MoveToClicked()
     {
-        transform.position = Vector3.MoveTowards(transform.position, clickPoint, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, clickPoint, AllStatsContainer.Instance.HookSpeed * Time.deltaTime);
         if (Vector3.Distance(transform.position, clickPoint) < 0.1f)
         {
             isMovingToClicked = false;
@@ -83,7 +82,7 @@ public class Hook : Offable
 
     void ReturnBack()
     {
-        transform.position = Vector3.MoveTowards(transform.position, originalPosition, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, originalPosition, AllStatsContainer.Instance.HookSpeed * Time.deltaTime);
         if (grabbedObject)
         {
             grabbedObject.transform.position = transform.position;

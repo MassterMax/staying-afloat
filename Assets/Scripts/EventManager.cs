@@ -48,7 +48,7 @@ public class EventManager : MonoBehaviour
         if (boxPrefab == null) return;
 
         Vector2 spawnPos = GetRandomEllipsePoint();
-        Vector2 targetPos = GetRandomPointInOtherQuadrant(spawnPos, 12f, 6f);
+        Vector2 targetPos = GetRandomPointInOtherQuadrant(spawnPos, 12f, 8f);
 
         GameObject go = Instantiate(boxPrefab, spawnPos, Quaternion.identity);
         Box boxComp = go.GetComponent<Box>();
@@ -64,7 +64,7 @@ public class EventManager : MonoBehaviour
         else return 20f;
     }
 
-    Vector2 GetRandomEllipsePoint(float minAngle = Mathf.PI / 2f, float maxAngle = 3f * Mathf.PI / 2f, float radiusX = 12f, float radiusY = 6f)
+    Vector2 GetRandomEllipsePoint(float minAngle = Mathf.PI / 2f, float maxAngle = 3f * Mathf.PI / 2f, float radiusX = 12f, float radiusY = 8f)
     {
         float angle = Random.Range(minAngle, maxAngle);
         float x = Mathf.Cos(angle) * radiusX;
@@ -72,45 +72,38 @@ public class EventManager : MonoBehaviour
         return new Vector2(x, y);
     }
 
-    int GetQuadrant(Vector2 point, Vector2 center)
-    {
-        if (point.x >= center.x && point.y >= center.y) return 1;
-        if (point.x < center.x && point.y >= center.y) return 2;
-        if (point.x < center.x && point.y < center.y) return 3;
-        return 4; // x >= center.x && y < center.y
-    }
-
     Vector2 GetRandomPointInOtherQuadrant(Vector2 currentPoint, float radiusX, float radiusY)
     {
-        int currentQuadrant = GetQuadrant(currentPoint, Vector2.zero);
+        // Генерирует точку на эллипсе так, чтобы её угол отличался от угла currentPoint
+        // минимум на 90° (pi/2). Убираем деление на четверти и используем ограничение по углу.
+        const float minDelta = Mathf.PI / 2f;      // 90 градусов
+        const float maxDelta = 3f * Mathf.PI / 2f; // 270 градусов
 
-        // список возможных четвертей кроме текущей
-        int[] otherQuadrants = new int[3];
-        int idx = 0;
-        for (int q = 1; q <= 4; q++)
-        {
-            if (q != currentQuadrant)
-            {
-                otherQuadrants[idx++] = q;
-            }
-        }
-
-        // случайная четверть
-        int targetQuadrant = otherQuadrants[Random.Range(0, 3)];
-
-        // генерируем случайный угол в этой четверти
-        float angle = 0f;
-        switch (targetQuadrant)
-        {
-            case 1: angle = Random.Range(0f, Mathf.PI / 2f); break;
-            case 2: angle = Random.Range(Mathf.PI / 2f, Mathf.PI); break;
-            case 3: angle = Random.Range(Mathf.PI, 3f * Mathf.PI / 2f); break;
-            case 4: angle = Random.Range(3f * Mathf.PI / 2f, 2f * Mathf.PI); break;
-        }
+        float currentAngle = Mathf.Atan2(currentPoint.y, currentPoint.x);
+        // разрешённый диапазон углов: [currentAngle + minDelta, currentAngle + maxDelta]
+        float angle = Random.Range(currentAngle + minDelta, currentAngle + maxDelta);
 
         float x = Mathf.Cos(angle) * radiusX;
         float y = Mathf.Sin(angle) * radiusY;
-
         return new Vector2(x, y);
+    }
+
+    void OnDrawGizmos()
+    {
+        // параметры должны совпадать с GetRandomEllipsePoint по умолчанию
+        float radiusX = 12f;
+        float radiusY = 8f;
+
+        int segments = 128;
+        Gizmos.color = Color.gray;
+
+        Vector3 prev = new Vector3(Mathf.Cos(0f) * radiusX, Mathf.Sin(0f) * radiusY, 0f);
+        for (int i = 1; i <= segments; i++)
+        {
+            float t = (float)i / segments * Mathf.PI * 2f;
+            Vector3 curr = new Vector3(Mathf.Cos(t) * radiusX, Mathf.Sin(t) * radiusY, 0f);
+            Gizmos.DrawLine(prev, curr);
+            prev = curr;
+        }
     }
 }

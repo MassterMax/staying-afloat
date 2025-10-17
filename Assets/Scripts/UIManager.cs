@@ -123,8 +123,13 @@ public class UIManager : MonoBehaviour
 
     public void ForceTurnOffControls()
     {
+        UpdateControls();
+        energySlider.value = 0f;
+    }
+
+    public void UpdateControls()
+    {
         UpdateHookImage();
         UpdateGunImage();
-        energySlider.value = 0f;
     }
 }

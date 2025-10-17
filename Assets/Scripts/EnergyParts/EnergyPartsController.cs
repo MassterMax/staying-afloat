@@ -3,20 +3,12 @@ using UnityEngine;
 
 public class EnergyPartsController : MonoBehaviour
 {
-    private float gunConsumptionRate = 3f; // Energy consumed per second when the gun is on
-    private float hookConsumptionRate = 2f; // Energy consumed per second when the hook is on
-    private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
+
     StatsManager statsManager;
     Hook hook;
     Gun gun;
-
-    // distance variables
-    private float maxEngineEnergyCost = 5f;
-    private float engineEnergyCoef = 1.5f;
     private float engineEnergyValue = 0f; // from 0 to 1
-    private float maxEngineSpeed = 10f; // maximum speed of the engine
     ShipEngine shipEngine;
-    private float blackHoleBaseSpeed = 10f;
 
     void Awake()
     {
@@ -32,31 +24,35 @@ public class EnergyPartsController : MonoBehaviour
         SetEnergyIncrease();
     }
 
-    public float GetShipEngineConsumptionRate()
+    void Update()
     {
-        return Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef);
-    }
-
-    public float GetBlackHoleSpeed(float distance)
-    {
-        return -5f;
-        // if (distance >= 100f)
-        //     return 1f; // No effect
-        // if (distance <= 66f)
-        //     return 5f;
-        // return blackHoleBaseSpeed / (distance * distance);
+        bool input = false;
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            input = true;
+            ChangeHookState();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            input = true;
+            ChangeGunState();
+        }
+        if (input)
+        {
+            statsManager.UpdateUIControls();
+        }
     }
 
     void SetEnergyIncrease()
     {
         float totalIncrease = 0f;
         if (hook.IsOn)
-            totalIncrease -= hookConsumptionRate;
+            totalIncrease -= AllStatsContainer.Instance.HookConsumptionRate;
         if (gun.IsOn)
-            totalIncrease -= gunConsumptionRate;
-        totalIncrease -= GetShipEngineConsumptionRate();
+            totalIncrease -= AllStatsContainer.Instance.GunConsumptionRate;
+        totalIncrease -= AllStatsContainer.Instance.GetShipEngineConsumptionRate(engineEnergyValue);
 
-        totalIncrease += solarPanelRestoreRate;
+        totalIncrease += AllStatsContainer.Instance.SolarPanelRestoreRate;
 
         Debug.Log("Setting energy increase: " + totalIncrease);
         statsManager.SetEnergyIncrease(totalIncrease);
@@ -65,7 +61,8 @@ public class EnergyPartsController : MonoBehaviour
     public void ChangeHookState()
     {
         if (hook.IsOn)
-            hook.TryOff();
+            // hook.TryOff();
+            hook.ForceOff();
         else
             hook.On();
         SetEnergyIncrease();
@@ -101,7 +98,7 @@ public class EnergyPartsController : MonoBehaviour
 
     void SetDistanceIncrease()
     {
-        statsManager.SetBaseDistanceIncrease(engineEnergyValue * maxEngineSpeed);
+        statsManager.SetBaseDistanceIncrease(engineEnergyValue * AllStatsContainer.Instance.MaxEngineSpeed);
     }
 
     public void SetShipEngine(float value)

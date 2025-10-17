@@ -5,7 +5,6 @@ public class StatsManager : MonoBehaviour
 {
     EnergyPartsController energyPartsController;
     UIManager uiManager;
-    private float maxEnergy = 100;
     private float energy = 100;
     private float energyIncrease = 0; // per second
     // private float health = 100;
@@ -27,8 +26,8 @@ public class StatsManager : MonoBehaviour
     void AddEnergy(float amount)
     {
         energy += amount;
-        if (energy > maxEnergy)
-            energy = maxEnergy;
+        if (energy > AllStatsContainer.Instance.MaxEnergy)
+            energy = AllStatsContainer.Instance.MaxEnergy;
         if (energy < 0)
         {
             energy = 0;
@@ -55,7 +54,7 @@ public class StatsManager : MonoBehaviour
 
     void Reset()
     {
-        energy = maxEnergy;
+        energy = AllStatsContainer.Instance.MaxEnergy;
         distance = 100;
         // health = 100;
     }
@@ -77,7 +76,7 @@ public class StatsManager : MonoBehaviour
     {
         // TODO calculate with baseDistanceIncrease, distance and black hole effect
         // realDistanceIncrease = baseDistanceIncrease; // TODO add black hole effect
-        float newRealDistanceIncrease = baseDistanceIncrease + energyPartsController.GetBlackHoleSpeed(distance);
+        float newRealDistanceIncrease = baseDistanceIncrease + AllStatsContainer.Instance.GetBlackHoleSpeed(distance);
         if (realDistanceIncrease != newRealDistanceIncrease)
         {
             realDistanceIncrease = newRealDistanceIncrease;
@@ -108,4 +107,8 @@ public class StatsManager : MonoBehaviour
         AddEnergy(energy);
     }
 
+    public void UpdateUIControls()
+    {
+        uiManager.UpdateControls();
+    }
 }

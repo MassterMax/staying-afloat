@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 640355461}
   - component: {fileID: 640355462}
   - component: {fileID: 640355463}
+  - component: {fileID: 640355464}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -462,6 +463,18 @@ MonoBehaviour:
   targetOffsetRangeX: {x: 2, y: 6}
   targetOffsetRangeY: {x: -1, y: 1}
   lootRange: {x: 5, y: 30}
+--- !u!114 &640355464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640355458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5c3a45c8dbd2314aa3aac5b9ea27564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &640414170
 GameObject:
   m_ObjectHideFlags: 0
