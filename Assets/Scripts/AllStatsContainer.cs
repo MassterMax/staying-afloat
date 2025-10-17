@@ -13,6 +13,9 @@ public class AllStatsContainer : MonoBehaviour
     private float hookSpeed = 10f;
     float defaultSliderValue = 0.4f;
     private float hookEnergyCost = 5f; // energy cost per hook launch
+    private float gunEnergyCost = 3f; // energy cost per gun shot
+    private float gunShotDelay = 0.5f; // delay between gun shots
+    private float hookExtraDistance = 0.5f; // extra distance added to hook target point
 
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
@@ -23,6 +26,9 @@ public class AllStatsContainer : MonoBehaviour
     public float HookSpeed => hookSpeed;
     public float DefaultSliderValue => defaultSliderValue;
     public float HookEnergyCost => hookEnergyCost;
+    public float GunEnergyCost => gunEnergyCost;
+    public float GunShotDelay => gunShotDelay;
+    public float HookExtraDistance => hookExtraDistance;
 
     public static AllStatsContainer Instance { get; private set; }
 

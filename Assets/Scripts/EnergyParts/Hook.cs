@@ -52,7 +52,9 @@ public class Hook : Offable
             if (statsManager.TryConsumeEnergy(AllStatsContainer.Instance.HookEnergyCost))
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                clickPoint = mousePos;
+                // increase click point distance as a help to reach further
+                Vector2 extra = (mousePos - (Vector2)transform.position).normalized;
+                clickPoint = mousePos + extra * AllStatsContainer.Instance.HookExtraDistance;
                 isMovingToClicked = true;
                 rotatable.CanRotate = false;
             }
