@@ -358,9 +358,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520b7e4af49684d4b9b0c0fa1bbcb3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 447e42c525d6cc849a738ffb322b30b0, type: 2}
-  distortionStrength: 0
-  blackHoleScreenPos: {x: 0, y: 0.5}
+  material: {fileID: 2100000, guid: f485d7d171f870549acdaedcb1fdaada, type: 2}
+  distortionStrength: 0.1
+  blackHoleScreenPos: {x: 1, y: 0.5}
+  collapse: 0
 --- !u!1 &640355458
 GameObject:
   m_ObjectHideFlags: 0
