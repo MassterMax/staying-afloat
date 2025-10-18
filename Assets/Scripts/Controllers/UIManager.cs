@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] TextMeshProUGUI distanceText;
     [SerializeField] TextMeshProUGUI distanceIncreaseText;
+    // bool distanceIncreases = true;
 
     [SerializeField] Button hookButton;
     [SerializeField] Sprite hookOnSprite;
@@ -82,6 +83,18 @@ public class UIManager : MonoBehaviour
         Debug.Log("Updating distance increase UI");
         string distanceIncreaseSymbol = statsManager.RealDistanceIncrease > 0 ? "+" : "";
         distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString(FLOAT_VALUE_FORMAT) + "/s";
+        if (Mathf.Approximately(statsManager.RealDistanceIncrease, 0f))
+        {
+            distanceIncreaseText.color = Color.white;
+        }
+        else if (statsManager.RealDistanceIncrease > 0)
+        {
+            distanceIncreaseText.color = Color.green;
+        }
+        else
+        {
+            distanceIncreaseText.color = Color.red;
+        }
     }
 
     void OnHookButtonClicked()
