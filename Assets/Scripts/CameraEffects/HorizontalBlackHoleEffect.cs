@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(Camera))]
 public class HorizontalBlackHoleEffect : MonoBehaviour
 {
     public Material material;

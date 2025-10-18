@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     const string FLOAT_VALUE_FORMAT = "F1";
+    const string INCREASE_FORMAT = "/ч";
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] TextMeshProUGUI distanceText;
     [SerializeField] TextMeshProUGUI distanceIncreaseText;
     // bool distanceIncreases = true;
+    [SerializeField] TextMeshProUGUI dayAndTimeText;
 
     [SerializeField] Button hookButton;
     [SerializeField] Sprite hookOnSprite;
@@ -34,10 +36,10 @@ public class UIManager : MonoBehaviour
         statsManager.OnDistanceIncreaseChanged += UpdateDistanceIncreaseUI;
 
         hookButton.onClick.AddListener(OnHookButtonClicked);
-        UpdateHookImage();
+        // UpdateHookImage();
 
         gunButton.onClick.AddListener(OnGunButtonClicked);
-        UpdateGunImage();
+        // UpdateGunImage();
 
         energySlider.onValueChanged.AddListener(OnSliderValueChanged);
 
@@ -47,6 +49,9 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        UpdateHookImage();
+        UpdateGunImage();
+
         energySlider.value = AllStatsContainer.Instance.DefaultSliderValue;
     }
 
@@ -70,7 +75,7 @@ public class UIManager : MonoBehaviour
     void UpdateEnergyIncreaseUI()
     {
         string energyIncreaseSymbol = statsManager.EnergyIncrease > 0 ? "+" : "";
-        energyIncreaseText.text = energyIncreaseSymbol + statsManager.EnergyIncrease.ToString(FLOAT_VALUE_FORMAT) + "/s";
+        energyIncreaseText.text = energyIncreaseSymbol + statsManager.EnergyIncrease.ToString(FLOAT_VALUE_FORMAT) + INCREASE_FORMAT;
     }
 
     void UpdateDistanceUI()
@@ -82,7 +87,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Updating distance increase UI");
         string distanceIncreaseSymbol = statsManager.RealDistanceIncrease > 0 ? "+" : "";
-        distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString(FLOAT_VALUE_FORMAT) + "/s";
+        distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString(FLOAT_VALUE_FORMAT) + INCREASE_FORMAT;
         if (Mathf.Approximately(statsManager.RealDistanceIncrease, 0f))
         {
             distanceIncreaseText.color = Color.white;
@@ -95,6 +100,16 @@ public class UIManager : MonoBehaviour
         {
             distanceIncreaseText.color = Color.red;
         }
+    }
+
+
+    // totalGameHours: 1 real second == 1 game hour, totalGameHours can be large
+    public void UpdateDayAndTime(int totalGameHours)
+    {
+        int day = Mathf.FloorToInt(totalGameHours / 24f) + 1;
+        int hour = Mathf.FloorToInt(totalGameHours % 24f);
+        if (dayAndTimeText != null)
+            dayAndTimeText.text = $"День {day} — {hour:00}:00";
     }
 
     void OnHookButtonClicked()

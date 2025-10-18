@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(StatsManager))]
 public class BlackHoleController : MonoBehaviour
 {
     [SerializeField] GameObject blackHole;

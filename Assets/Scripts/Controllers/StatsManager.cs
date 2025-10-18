@@ -69,9 +69,8 @@ public class StatsManager : MonoBehaviour
 
     void Reset()
     {
-        energy = AllStatsContainer.Instance.MaxEnergy;
-        distance = 100;
-        // health = 100;
+        energy = AllStatsContainer.Instance.StartEnergy;
+        distance = AllStatsContainer.Instance.StartDistance;
     }
 
     void Start()
