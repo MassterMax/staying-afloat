@@ -1,4 +1,5 @@
 
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,10 +7,12 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     const string FLOAT_VALUE_FORMAT = "F1";
+    const string HARD_FLOAT_VALUE_FORMAT = "F0";
     const string INCREASE_FORMAT = "/ч";
     [SerializeField] GameObject shipUIPanel;
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject losePanel;
+    [SerializeField] GameObject winPanel;
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] TextMeshProUGUI distanceText;
@@ -26,6 +29,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button gunButton;
     [SerializeField] Sprite gunOnSprite;
     [SerializeField] Sprite gunOffSprite;
+
+    // fly
+    bool flyButtonActive = false;
+    [SerializeField] Button flyButton;
+    [SerializeField] TextMeshProUGUI flyText;
+    [SerializeField] Sprite flyButtonPassiveSprite;
+    [SerializeField] Sprite flyButtonActiveSprite;
+    [SerializeField] Sprite flyButtonPressedSprite;
 
     StatsManager statsManager;
     EnergyPartsController energyPartsController;
@@ -55,8 +66,10 @@ public class UIManager : MonoBehaviour
         UpdateHookImage();
         UpdateGunImage();
         losePanel.SetActive(false);
+        winPanel.SetActive(false);
 
         energySlider.value = AllStatsContainer.Instance.DefaultSliderValue;
+        flyButton.interactable = false;
     }
 
     void OnDestroy()
@@ -74,6 +87,20 @@ public class UIManager : MonoBehaviour
     {
         // округляем до десятых
         energyText.text = statsManager.Energy.ToString(FLOAT_VALUE_FORMAT);
+        float percent = Math.Min(100f, (statsManager.Energy * 100f / AllStatsContainer.Instance.EnergyToFly));
+        flyText.text = percent.ToString(HARD_FLOAT_VALUE_FORMAT) + "%";
+        bool flyButtonShouldBeActive = statsManager.Energy >= AllStatsContainer.Instance.EnergyToFly;
+
+        if (flyButtonShouldBeActive != flyButtonActive)
+        {
+            flyButtonActive = flyButtonShouldBeActive;
+            flyButton.interactable = flyButtonShouldBeActive;
+
+            if (flyButtonActive)
+                flyButton.image.sprite = flyButtonActiveSprite;
+            else
+                flyButton.image.sprite = flyButtonPassiveSprite;
+        }
     }
 
     void UpdateEnergyIncreaseUI()
@@ -182,5 +209,15 @@ public class UIManager : MonoBehaviour
     public void HideShipUIPanel()
     {
         shipUIPanel.SetActive(false);
+    }
+
+    public void FlyAwayButton()
+    {
+        GameStateManager.Instance.FlyAway(ShowWinScreen);
+    }
+
+    void ShowWinScreen()
+    {
+        winPanel.SetActive(true);
     }
 }

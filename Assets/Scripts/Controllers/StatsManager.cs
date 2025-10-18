@@ -174,4 +174,9 @@ public class StatsManager : MonoBehaviour
     {
         AddEnergy(-10000f);
     }
+
+    public void IncreaseEnergyDebug()
+    {
+        AddEnergy(100);
+    }
 }

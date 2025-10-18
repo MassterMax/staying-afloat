@@ -19,12 +19,12 @@ public class HyperJumpController : MonoBehaviour
     }
 
 
-    public void DoHyperJump(Action onComplete = null)
+    public void DoHyperJump(Action onComplete = null, bool keepPanel = true)
     {
-        StartCoroutine(HyperJump(onComplete));
+        StartCoroutine(HyperJump(onComplete, keepPanel));
     }
 
-    private IEnumerator HyperJump(Action onComplete)
+    private IEnumerator HyperJump(Action onComplete, bool keepPanel)
     {
         float duration = 0.3f;
         float timer = 0f;
@@ -54,7 +54,7 @@ public class HyperJumpController : MonoBehaviour
         //     jumpPanel.color = new Color(jumpPanel.color.r, jumpPanel.color.g, jumpPanel.color.b, Mathf.Lerp(1f, 0f, t));
         //     yield return null;
         // }
-
+        jumpPanel.gameObject.SetActive(keepPanel);
         onComplete?.Invoke();
     }
 

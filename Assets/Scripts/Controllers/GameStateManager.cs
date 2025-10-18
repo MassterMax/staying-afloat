@@ -14,7 +14,7 @@ public class GameStateManager : MonoBehaviour
     StatsManager statsManager;
     BlackHoleController blackHoleController;
     bool paused = false;
-    bool lost = false;
+    bool end = false;
     bool canReturn = false;
     public bool Paused => paused;
     public static GameStateManager Instance { get; private set; }
@@ -64,7 +64,7 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (lost)
+        if (end)
         {
             if (canReturn && Input.anyKeyDown)
             {
@@ -84,6 +84,18 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+    public void FlyAway(Action action)
+    {
+        end = true;
+        hyperJumpController.DoHyperJump(() =>
+        {
+            paused = true;
+            Time.timeScale = 0f;
+            action?.Invoke();
+            canReturn = true;
+        }, keepPanel: false);
+    }
+
     void LoadGame()
     {
         hyperJumpController.DoHyperJump(() => LoadAfterJump());
@@ -98,7 +110,7 @@ public class GameStateManager : MonoBehaviour
     public void LoadStart()
     {
         canReturn = false;
-        lost = false;
+        end = false;
         inStart = true;
         SceneManager.LoadScene(START_SCENE_NAME);
         paused = false;
@@ -137,7 +149,7 @@ public class GameStateManager : MonoBehaviour
 
     public void LoseBlackHole()
     {
-        lost = true;
+        end = true;
         statsManager.LoseAllEnergy();
         uiManager.HideShipUIPanel();
         StartCoroutine(LoseAfterBH(ShowLoseScreen));
@@ -163,7 +175,7 @@ public class GameStateManager : MonoBehaviour
 
     public void LoseExplosion()
     {
-        lost = true;
+        end = true;
         statsManager.LoseAllEnergy();
         uiManager.HideShipUIPanel();
         StartCoroutine(LoseAfterExplosion(ShowLoseScreen));

@@ -26,6 +26,12 @@ public class EnergyPartsController : MonoBehaviour
 
     void Update()
     {
+        // debug 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            statsManager.IncreaseEnergyDebug();
+        }
+
         bool input = false;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -36,6 +42,11 @@ public class EnergyPartsController : MonoBehaviour
         {
             input = true;
             ChangeGunState();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            input = true;
+            // todo try to press fly away
         }
         if (input)
         {

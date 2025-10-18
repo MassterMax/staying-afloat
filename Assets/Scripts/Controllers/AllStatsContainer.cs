@@ -6,7 +6,7 @@ public class AllStatsContainer : MonoBehaviour
     private float gunConsumptionRate = 1f; // Energy consumed per second when the gun is on
     private float hookConsumptionRate = 1f; // Energy consumed per second when the hook is on
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
-    private float maxEnergy = 1000;
+    private float maxEnergy = 2000;
     private float startEnergy = 100;
     private float startDistance = 100;
     private float maxEngineEnergyCost = 4f;
@@ -21,6 +21,7 @@ public class AllStatsContainer : MonoBehaviour
     private float gunShotSpeed = 15f;
     private float gunShotLifetime = 1.5f;
     private float asteroidHitChance = 0.8f;
+    private float energyToFly = 1000f;
 
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
@@ -40,6 +41,7 @@ public class AllStatsContainer : MonoBehaviour
     public float StartDistance => startDistance;
     public float MaxHp => maxHP;
     public float AsteroidHitChance => asteroidHitChance;
+    public float EnergyToFly => energyToFly;
 
     public static AllStatsContainer Instance { get; private set; }
 
