@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,7 +8,11 @@ public class GameStateManager : MonoBehaviour
     private const string GAME_SCENE_NAME = "Game";
     private const string START_SCENE_NAME = "Start";
     UIManager uiManager;
+    StatsManager statsManager;
+    BlackHoleController blackHoleController;
     bool paused = false;
+    bool lost = false;
+    bool canReturn = false;
     public bool Paused => paused;
     public static GameStateManager Instance { get; private set; }
     public event Action OnPauseStateChanged;
@@ -21,6 +26,8 @@ public class GameStateManager : MonoBehaviour
         {
             Debug.Log("Called OnSceneLoaded in GAME_SCENE_NAME");
             uiManager = FindAnyObjectByType<UIManager>();
+            statsManager = FindAnyObjectByType<StatsManager>();
+            blackHoleController = FindAnyObjectByType<BlackHoleController>();
             ResumeGame();
         }
         else if (scene.name == START_SCENE_NAME)
@@ -54,6 +61,15 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (lost)
+        {
+            if (canReturn && Input.anyKeyDown)
+            {
+                LoadStart();
+            }
+            return;
+        }
+
         if (inStart && Input.anyKeyDown)
         {
             LoadGame();
@@ -78,6 +94,8 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadStart()
     {
+        canReturn = false;
+        lost = false;
         inStart = true;
         SceneManager.LoadScene(START_SCENE_NAME);
         paused = false;
@@ -112,5 +130,31 @@ public class GameStateManager : MonoBehaviour
     {
         if (Instance == this)
             SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void LoseBlackHole()
+    {
+        lost = true;
+        statsManager.LoseAllEnergy();
+        uiManager.HideShipUIPanel();
+        StartCoroutine(LoseAfterBH(ShowLoseScreen));
+    }
+
+    private void ShowLoseScreen()
+    {
+        uiManager.ShowLosePanel();
+        canReturn = true;
+    }
+
+    private IEnumerator LoseAfterBH(Action action)
+    {
+        while (blackHoleController.GetScale() < 2f)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+        paused = true;
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(3f);
+        action?.Invoke();
     }
 }

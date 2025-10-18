@@ -7,7 +7,9 @@ public class UIManager : MonoBehaviour
 {
     const string FLOAT_VALUE_FORMAT = "F1";
     const string INCREASE_FORMAT = "/ч";
+    [SerializeField] GameObject shipUIPanel;
     [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject losePanel;
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] TextMeshProUGUI distanceText;
@@ -52,6 +54,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateHookImage();
         UpdateGunImage();
+        losePanel.SetActive(false);
 
         energySlider.value = AllStatsContainer.Instance.DefaultSliderValue;
     }
@@ -165,8 +168,19 @@ public class UIManager : MonoBehaviour
         pausePanel.SetActive(pause);
     }
 
+    public void ShowLosePanel()
+    {
+        Debug.Log("ShowLosePanel");
+        losePanel.SetActive(true);
+    }
+
     public void GoToMenu()
     {
         GameStateManager.Instance.LoadStart();
+    }
+
+    public void HideShipUIPanel()
+    {
+        shipUIPanel.SetActive(false);
     }
 }

@@ -10,6 +10,8 @@ public class StatsManager : MonoBehaviour
     private float energyIncrease = 0; // per second
     // private float health = 100;
     private float distance = 100;
+    bool lost = false;
+    private float loseDistanceIncrease = 0f;
     private float baseDistanceIncrease = 0; // per second
     private float realDistanceIncrease = 0; // per second, with black hole effect
     public event Action OnEnergyChanged;
@@ -106,7 +108,7 @@ public class StatsManager : MonoBehaviour
 
     private float CalculateRealDistanceIncrease()
     {
-        return baseDistanceIncrease + AllStatsContainer.Instance.GetBlackHoleSpeed(distance, timeController.GetLastReportedGameHours());
+        return loseDistanceIncrease + baseDistanceIncrease + AllStatsContainer.Instance.GetBlackHoleSpeed(distance, timeController.GetLastReportedGameHours());
     }
 
     void CalculateDistance()
@@ -120,12 +122,15 @@ public class StatsManager : MonoBehaviour
             OnDistanceIncreaseChanged?.Invoke();
         }
         distance += realDistanceIncrease * Time.fixedDeltaTime;
-        if (distance < 0)
+        if (distance < 0 && !lost)
         {
+            lost = true;
             distance = 0;
+            // loseDistanceIncrease = -10f;
             Debug.LogWarning("You lose!!!!!!!!!!!!!");
-            // handle lose
+            GameStateManager.Instance.LoseBlackHole();
         }
+        // Debug.Log("Distance: " + distance);
         OnDistanceChanged?.Invoke();
     }
 
@@ -162,5 +167,10 @@ public class StatsManager : MonoBehaviour
         {
             Debug.Log("Explode!");
         }
+    }
+
+    public void LoseAllEnergy()
+    {
+        AddEnergy(-10000f);
     }
 }

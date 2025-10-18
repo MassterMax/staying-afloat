@@ -4,7 +4,7 @@ public class BlackHoleController : MonoBehaviour
 {
     [SerializeField] GameObject blackHole;
     float minScale = 0.05f; // distance = 100 or more
-    float maxScale = 1.0f; // distance = 0 or less
+    float maxScale = 1.0f; // distance = -100 or less
     StatsManager statsManager;
     ScrollingBackground scrollingBackground;
 
@@ -27,11 +27,25 @@ public class BlackHoleController : MonoBehaviour
         ScaleBlackHole();
     }
 
+    public float GetScale()
+    {
+        return blackHole.transform.localScale.x;
+    }
+
     void ScaleBlackHole()
     {
         float distance = statsManager.Distance;
+        float scale;
         // float distance = distanceDebug;
-        float scale = Mathf.Lerp(maxScale, minScale, distance / 100f);
+        if (distance >= 0)
+        {
+            scale = Mathf.Lerp(maxScale, minScale, distance / 100f);
+        }
+        else
+        {
+            float t = Mathf.InverseLerp(0f, -100f, distance); // 0 при 0, 1 при -100
+            scale = Mathf.Lerp(1f, 2.2f, t);
+        }
         blackHole.transform.localScale = new Vector3(scale, 1, 1);
     }
 
