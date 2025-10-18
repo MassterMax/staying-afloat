@@ -58,4 +58,9 @@ public class TimeController : MonoBehaviour
     {
         uiManager.UpdateDayAndTime(lastReportedGameHours);
     }
+
+    public int GetLastReportedGameHours()
+    {
+        return lastReportedGameHours;
+    }
 }

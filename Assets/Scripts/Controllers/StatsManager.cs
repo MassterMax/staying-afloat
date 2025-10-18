@@ -23,6 +23,7 @@ public class StatsManager : MonoBehaviour
     // public float Health => health;
     // public int PlayerScore => playerScore;
     // public int AntagonistScore => antagonistScore;
+    TimeController timeController;
     void AddEnergy(float amount)
     {
         energy += amount;
@@ -73,6 +74,12 @@ public class StatsManager : MonoBehaviour
         distance = AllStatsContainer.Instance.StartDistance;
     }
 
+    void Awake()
+    {
+        energyPartsController = FindFirstObjectByType<EnergyPartsController>();
+        uiManager = FindFirstObjectByType<UIManager>();
+        timeController = FindFirstObjectByType<TimeController>();
+    }
     void Start()
     {
         Reset();
@@ -80,21 +87,23 @@ public class StatsManager : MonoBehaviour
         OnEnergyIncreaseChanged?.Invoke();
         OnDistanceChanged?.Invoke();
 
-        realDistanceIncrease = baseDistanceIncrease + AllStatsContainer.Instance.GetBlackHoleSpeed(distance);
+        realDistanceIncrease = CalculateRealDistanceIncrease();
         OnDistanceIncreaseChanged?.Invoke();
-
-        energyPartsController = FindFirstObjectByType<EnergyPartsController>();
-        uiManager = FindFirstObjectByType<UIManager>();
     }
 
     void OnEnable() => Box.OnPickedUp += HandlePickup;
     void OnDisable() => Box.OnPickedUp -= HandlePickup;
 
+    private float CalculateRealDistanceIncrease()
+    {
+        return baseDistanceIncrease + AllStatsContainer.Instance.GetBlackHoleSpeed(distance, timeController.GetLastReportedGameHours());
+    }
+
     void CalculateDistance()
     {
         // TODO calculate with baseDistanceIncrease, distance and black hole effect
         // realDistanceIncrease = baseDistanceIncrease; // TODO add black hole effect
-        float newRealDistanceIncrease = baseDistanceIncrease + AllStatsContainer.Instance.GetBlackHoleSpeed(distance);
+        float newRealDistanceIncrease = CalculateRealDistanceIncrease();
         if (realDistanceIncrease != newRealDistanceIncrease)
         {
             realDistanceIncrease = newRealDistanceIncrease;

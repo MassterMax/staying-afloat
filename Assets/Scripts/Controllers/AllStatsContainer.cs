@@ -52,16 +52,17 @@ public class AllStatsContainer : MonoBehaviour
         DontDestroyOnLoad(gameObject); // если нужно сохранять между сценами
     }
 
-    public float GetBlackHoleSpeed(float distance)
+    public float GetBlackHoleSpeed(float distance, int elapsedHours)
     {
+        float baseSpeed = -0.1f * (elapsedHours / 24); // increases by -0.1f every 24 hours
         // return -5f;
         if (distance >= 60f)
-            return -2f; // No effect
+            return baseSpeed - 2f; // No effect
         if (distance >= 30f)
-            return -3f;
+            return baseSpeed - 3f;
         if (distance >= 10f)
-            return -4.5f;
-        return -5.2f;
+            return baseSpeed - 4.5f;
+        return baseSpeed - 5.2f;
     }
 
     public float GetShipEngineConsumptionRate(float engineEnergyValue)
