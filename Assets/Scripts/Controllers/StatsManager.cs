@@ -93,8 +93,16 @@ public class StatsManager : MonoBehaviour
         OnDistanceIncreaseChanged?.Invoke();
     }
 
-    void OnEnable() => Box.OnPickedUp += HandlePickup;
-    void OnDisable() => Box.OnPickedUp -= HandlePickup;
+    void OnEnable()
+    {
+        Box.OnPickedUp += HandlePickup;
+        GoldenBox.OnGoldenPickedUp += HandleGoldenPickup;
+    }
+    void OnDisable()
+    {
+        Box.OnPickedUp -= HandlePickup;
+        GoldenBox.OnGoldenPickedUp -= HandleGoldenPickup;
+    }
 
     private float CalculateRealDistanceIncrease()
     {
@@ -134,6 +142,11 @@ public class StatsManager : MonoBehaviour
     {
         Debug.Log("Picked up energy: " + energy);
         AddEnergy(energy);
+    }
+
+    void HandleGoldenPickup()
+    {
+        Debug.Log("Picked up golden box!!!");
     }
 
     public void UpdateUIControls()

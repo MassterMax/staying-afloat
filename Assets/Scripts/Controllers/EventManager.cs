@@ -3,6 +3,7 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
     [SerializeField] GameObject boxPrefab;
+    [SerializeField] GameObject goldenBoxPrefab;
     [SerializeField] GameObject asteroidPrefab;
     float minTimeToNextEvent = 2f;
     float maxTimeToNextEvent = 7f;
@@ -42,6 +43,10 @@ public class EventManager : MonoBehaviour
         t = Random.Range(0f, 1f);
         if (t < 0.6f)
             SpawnBox();
+
+        t = Random.Range(0f, 1f);
+        if (t < 0.2f)
+            SpawnGoldenBox();
     }
 
     void SpawnAsteroid()
@@ -76,8 +81,6 @@ public class EventManager : MonoBehaviour
 
     void SpawnBox()
     {
-        if (boxPrefab == null) return;
-
         Vector2 spawnPos = GetRandomEllipsePoint();
         Vector2 targetPos = GetRandomPointInOtherQuadrant(spawnPos, 12f, 8f);
 
@@ -86,6 +89,17 @@ public class EventManager : MonoBehaviour
         float energyLoot = AllStatsContainer.Instance.GetBoxEnergy();
         boxComp.Init(spawnPos, targetPos, null, energyLoot);
     }
+
+    void SpawnGoldenBox()
+    {
+        Vector2 spawnPos = GetRandomEllipsePoint();
+        Vector2 targetPos = GetRandomPointInOtherQuadrant(spawnPos, 12f, 8f);
+
+        GameObject go = Instantiate(goldenBoxPrefab, spawnPos, Quaternion.identity);
+        GoldenBox boxComp = go.GetComponent<GoldenBox>();
+        boxComp.Init(spawnPos, targetPos, null);
+    }
+
 
     Vector2 GetRandomEllipsePoint(float minAngle = Mathf.PI / 2f, float maxAngle = 3f * Mathf.PI / 2f, float radiusX = 12f, float radiusY = 8f)
     {
