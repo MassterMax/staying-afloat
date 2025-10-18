@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class AllStatsContainer : MonoBehaviour
 {
+    // start stats (for stats that can be improved)
+    private int startMaxHP = 3;
+    // current stats
     private int maxHP = 3;
     private float gunConsumptionRate = 1f; // Energy consumed per second when the gun is on
     private float hookConsumptionRate = 1f; // Energy consumed per second when the hook is on
@@ -56,6 +59,12 @@ public class AllStatsContainer : MonoBehaviour
 
         Instance = this;
         // DontDestroyOnLoad(gameObject); // если нужно сохранять между сценами
+    }
+
+    public void ResetStats()
+    {
+        Debug.Log("Resetting stats");
+        maxHP = startMaxHP;
     }
 
     public float GetBlackHoleSpeed(float distance, int elapsedHours)

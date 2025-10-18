@@ -31,6 +31,7 @@ public class GameStateManager : MonoBehaviour
             uiManager = FindAnyObjectByType<UIManager>();
             statsManager = FindAnyObjectByType<StatsManager>();
             blackHoleController = FindAnyObjectByType<BlackHoleController>();
+            AllStatsContainer.Instance.ResetStats();
             ResumeGame();
         }
         else if (scene.name == START_SCENE_NAME)
