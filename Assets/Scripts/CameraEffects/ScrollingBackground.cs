@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ScrollingBackground : MonoBehaviour
 {
-    private float speed = 0.5f;
+    private float speed = -0.01f;
     [SerializeField] private Renderer rend;
     void Update()
     {

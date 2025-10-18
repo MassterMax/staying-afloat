@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     const string FLOAT_VALUE_FORMAT = "F1";
     const string INCREASE_FORMAT = "/ч";
+    [SerializeField] GameObject pausePanel;
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI energyIncreaseText;
     [SerializeField] TextMeshProUGUI distanceText;
@@ -157,5 +158,10 @@ public class UIManager : MonoBehaviour
     {
         UpdateHookImage();
         UpdateGunImage();
+    }
+
+    public void HandlePause(bool pause)
+    {
+        pausePanel.SetActive(pause);
     }
 }
