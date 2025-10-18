@@ -114,7 +114,7 @@ public class UIManager : MonoBehaviour
 
     void OnSliderValueChanged(float value)
     {
-        Debug.Log("Slider value changed: " + value);
+        // Debug.Log("Slider value changed: " + value);
         energyPartsController.SetShipEngine(value);
         UpdateEnergyIncreaseUI();
     }

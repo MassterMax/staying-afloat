@@ -3,6 +3,7 @@ using System;
 
 public class Asteroid : MonoBehaviour
 {
+    [SerializeField] private GameObject explosionEffectPrefab;
     [Header("Motion")]
     [SerializeField] private float minSpeed = 1.5f;
     [SerializeField] private float maxSpeed = 3.5f;
@@ -38,19 +39,20 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other == null) return;
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Asteroid hit player — apply damage");
-            // TODO: найти компонент здоровья и вызвать ApplyDamage(...) если есть
-            Destroy(gameObject);
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other == null) return;
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         Debug.Log("Asteroid hit player — apply damage");
+    //         // TODO: найти компонент здоровья и вызвать ApplyDamage(...) если есть
+    //         Explode();
+    //     }
+    // }
 
-    void OnDestroy()
+    public void Explode()
     {
-        Debug.Log("OnDestroy1");
+        Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

@@ -36,16 +36,15 @@ public class LaserShot : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Meteorite"))
+        if (other.CompareTag("Asteroid"))
         {
             Debug.Log("LaserShot hit meteor: " + other.gameObject.name);
-            // todo spawn hit effect
-            Destroy(other.gameObject);
+            other.GetComponent<Asteroid>()?.Explode();
             Destroy(gameObject);
         }
         else
         {
-            Debug.Log("LaserShot hit non-meteor: " + other.gameObject.name);
+            Debug.Log("LaserShot hit non-Asteroid: " + other.gameObject.name);
             // optional: destroy bullet on hitting any obstacle
             // Destroy(gameObject);
         }

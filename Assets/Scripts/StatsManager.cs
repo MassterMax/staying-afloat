@@ -63,7 +63,7 @@ public class StatsManager : MonoBehaviour
 
     public void SetBaseDistanceIncrease(float amount)
     {
-        Debug.Log("Setting base distance increase: " + amount);
+        // Debug.Log("Setting base distance increase: " + amount);
         baseDistanceIncrease = amount;
     }
 
