@@ -9,10 +9,22 @@ public class EventManager : MonoBehaviour
     float maxTimeToNextEvent = 7f;
     float timeToNextEvent;
     float timer = 0f;
+    TimeController timeController;
 
+    void Awake()
+    {
+        timeController = FindAnyObjectByType<TimeController>();
+    }
     void Start()
     {
+        CalculateTimeToNextEvent();
+    }
+
+    void CalculateTimeToNextEvent()
+    {
         timeToNextEvent = Random.Range(minTimeToNextEvent, maxTimeToNextEvent);
+        timeToNextEvent -= AllStatsContainer.Instance.TimeBetweenEventsMinus(timeController.GetLastReportedGameHours());
+        timeToNextEvent = Mathf.Max(0.1f, timeToNextEvent);
     }
 
     // Update is called once per frame
@@ -23,7 +35,7 @@ public class EventManager : MonoBehaviour
         {
             CreateEvent();
             timer = 0f;
-            timeToNextEvent = Random.Range(minTimeToNextEvent, maxTimeToNextEvent);
+            CalculateTimeToNextEvent();
         }
 
         // for debug
@@ -45,7 +57,7 @@ public class EventManager : MonoBehaviour
             SpawnBox();
 
         t = Random.Range(0f, 1f);
-        if (t < 0.2f)
+        if (t < 0.1f)
             SpawnGoldenBox();
     }
 

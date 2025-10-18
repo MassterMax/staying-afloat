@@ -3,7 +3,7 @@ using System;
 
 public class StatsManager : MonoBehaviour
 {
-    private float currentHP;
+    private int currentHP;
     EnergyPartsController energyPartsController;
     UIManager uiManager;
     private float energy = 100;
@@ -76,6 +76,7 @@ public class StatsManager : MonoBehaviour
         energy = AllStatsContainer.Instance.StartEnergy;
         distance = AllStatsContainer.Instance.StartDistance;
         currentHP = AllStatsContainer.Instance.MaxHp;
+        uiManager.ShowHP(currentHP);
     }
 
     void Awake()
@@ -163,6 +164,7 @@ public class StatsManager : MonoBehaviour
     {
         currentHP -= 1;
         Debug.Log("Current HP: " + currentHP);
+        uiManager.ShowHP(currentHP);
         if (currentHP == 0)
         {
             Debug.Log("Explode!");

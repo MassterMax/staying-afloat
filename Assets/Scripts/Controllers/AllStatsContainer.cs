@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AllStatsContainer : MonoBehaviour
 {
-    private float maxHP = 3f;
+    private int maxHP = 3;
     private float gunConsumptionRate = 1f; // Energy consumed per second when the gun is on
     private float hookConsumptionRate = 1f; // Energy consumed per second when the hook is on
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
@@ -39,7 +39,7 @@ public class AllStatsContainer : MonoBehaviour
     public float GunShotLifetime => gunShotLifetime;
     public float StartEnergy => startEnergy;
     public float StartDistance => startDistance;
-    public float MaxHp => maxHP;
+    public int MaxHp => maxHP;
     public float AsteroidHitChance => asteroidHitChance;
     public float EnergyToFly => energyToFly;
 
@@ -71,6 +71,12 @@ public class AllStatsContainer : MonoBehaviour
         if (distance >= 0)
             return baseSpeed - 5.2f;
         return -500f;
+    }
+
+    public float TimeBetweenEventsMinus(int elapsedHours)
+    {
+        float baseSpeed = -0.1f * (elapsedHours / 24); // increases by -0.1f every 24 hours
+        return baseSpeed;
     }
 
     public float GetShipEngineConsumptionRate(float engineEnergyValue)

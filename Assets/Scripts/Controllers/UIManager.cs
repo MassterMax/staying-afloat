@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +39,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] Sprite flyButtonActiveSprite;
     [SerializeField] Sprite flyButtonPressedSprite;
 
+    // hp
+    [SerializeField] List<GameObject> hpBar;
+
     StatsManager statsManager;
     EnergyPartsController energyPartsController;
     void Awake()
@@ -70,6 +74,7 @@ public class UIManager : MonoBehaviour
 
         energySlider.value = AllStatsContainer.Instance.DefaultSliderValue;
         flyButton.interactable = false;
+        // ShowHP(3)
     }
 
     void OnDestroy()
@@ -219,5 +224,16 @@ public class UIManager : MonoBehaviour
     void ShowWinScreen()
     {
         winPanel.SetActive(true);
+    }
+
+    public void ShowHP(int value)
+    {
+        for (int i = 0; i < hpBar.Count; ++i)
+        {
+            if (i < value)
+                hpBar[i].SetActive(true);
+            else
+                hpBar[i].SetActive(false);
+        }
     }
 }
