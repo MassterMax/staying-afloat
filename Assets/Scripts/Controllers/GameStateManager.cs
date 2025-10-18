@@ -22,9 +22,13 @@ public class GameStateManager : MonoBehaviour
             uiManager = FindAnyObjectByType<UIManager>();
             ResumeGame();
         }
+        else if (scene.name == START_SCENE_NAME)
+        {
+            Debug.Log("Called OnSceneLoaded in START_SCENE_NAME");
+        }
     }
 
-    void Start()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -34,10 +38,10 @@ public class GameStateManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-        // uiManager = FindAnyObjectByType<UIManager>();
-        // ResumeGame();
-
+    void Start()
+    {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name.Equals(START_SCENE_NAME))
         {
@@ -63,6 +67,14 @@ public class GameStateManager : MonoBehaviour
     {
         inStart = false;
         SceneManager.LoadScene(GAME_SCENE_NAME);
+    }
+
+    public void LoadStart()
+    {
+        inStart = true;
+        SceneManager.LoadScene(START_SCENE_NAME);
+        paused = false;
+        Time.timeScale = 1f;
     }
 
     void HandlePause()

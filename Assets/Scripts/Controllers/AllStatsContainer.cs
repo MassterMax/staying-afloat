@@ -49,7 +49,7 @@ public class AllStatsContainer : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // если нужно сохранять между сценами
+        // DontDestroyOnLoad(gameObject); // если нужно сохранять между сценами
     }
 
     public float GetBlackHoleSpeed(float distance, int elapsedHours)

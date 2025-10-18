@@ -164,4 +164,9 @@ public class UIManager : MonoBehaviour
     {
         pausePanel.SetActive(pause);
     }
+
+    public void GoToMenu()
+    {
+        GameStateManager.Instance.LoadStart();
+    }
 }
