@@ -8,7 +8,7 @@ public class AllStatsContainer : MonoBehaviour
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
     private float maxEnergy = 1000;
     private float startEnergy = 100;
-    private float startDistance = 10;
+    private float startDistance = 100;
     private float maxEngineEnergyCost = 4f;
     private float engineEnergyCoef = 1.5f;
     private float maxEngineSpeed = 5f; // maximum speed of the engine

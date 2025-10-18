@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
+    [SerializeField] GameObject explosionPrefab;
     private const string GAME_SCENE_NAME = "Game";
     private const string START_SCENE_NAME = "Start";
     UIManager uiManager;
@@ -155,6 +158,44 @@ public class GameStateManager : MonoBehaviour
         paused = true;
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(3f);
+        action?.Invoke();
+    }
+
+    public void LoseExplosion()
+    {
+        lost = true;
+        statsManager.LoseAllEnergy();
+        uiManager.HideShipUIPanel();
+        StartCoroutine(LoseAfterExplosion(ShowLoseScreen));
+    }
+
+    private IEnumerator LoseAfterExplosion(Action action)
+    {
+        // TODO create explosion
+        // while (blackHoleController.GetScale() < 2f)
+        // {
+        //     yield return new WaitForFixedUpdate();
+        // }
+        List<GameObject> explosions = new List<GameObject>();
+        for (int i = 0; i <= 5; ++i)
+        {
+            yield return new WaitForSeconds(0.2f);
+            Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f));
+            GameObject spawned = Instantiate(explosionPrefab, spawnPos, Quaternion.identity);
+            explosions.Add(spawned);
+        }
+        // yield return new WaitForSeconds(2f);
+        // for (int i = 0; i < 5; ++i)
+        // {
+        //     Debug.Log(explosions[i]);
+        // }
+        while (explosions.Any(x => x != null))
+        {
+            yield return new WaitForFixedUpdate();
+        }
+        paused = true;
+        Time.timeScale = 0f;
+        // yield return new WaitForSecondsRealtime(3f);
         action?.Invoke();
     }
 }

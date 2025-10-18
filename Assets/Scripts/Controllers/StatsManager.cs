@@ -166,6 +166,7 @@ public class StatsManager : MonoBehaviour
         if (currentHP == 0)
         {
             Debug.Log("Explode!");
+            GameStateManager.Instance.LoseExplosion();
         }
     }
 
