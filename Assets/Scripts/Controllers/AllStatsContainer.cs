@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class AllStatsContainer : MonoBehaviour
 {
+    private float maxHP = 3f;
     private float gunConsumptionRate = 1f; // Energy consumed per second when the gun is on
     private float hookConsumptionRate = 1f; // Energy consumed per second when the hook is on
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
@@ -19,6 +20,7 @@ public class AllStatsContainer : MonoBehaviour
     private float hookExtraDistance = 1f; // extra distance added to hook target point
     private float gunShotSpeed = 15f;
     private float gunShotLifetime = 1.5f;
+    private float asteroidHitChance = 0.8f;
 
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
@@ -36,6 +38,8 @@ public class AllStatsContainer : MonoBehaviour
     public float GunShotLifetime => gunShotLifetime;
     public float StartEnergy => startEnergy;
     public float StartDistance => startDistance;
+    public float MaxHp => maxHP;
+    public float AsteroidHitChance => asteroidHitChance;
 
     public static AllStatsContainer Instance { get; private set; }
 

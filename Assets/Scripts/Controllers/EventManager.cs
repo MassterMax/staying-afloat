@@ -4,8 +4,8 @@ public class EventManager : MonoBehaviour
 {
     [SerializeField] GameObject boxPrefab;
     [SerializeField] GameObject asteroidPrefab;
-    float minTimeToNextEvent = 3f;
-    float maxTimeToNextEvent = 8f;
+    float minTimeToNextEvent = 2f;
+    float maxTimeToNextEvent = 7f;
     float timeToNextEvent;
     float timer = 0f;
 
@@ -36,9 +36,11 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("Event Created");
         float t = Random.Range(0f, 1f);
-        if (t < 0.5f)
+        if (t < 0.4f)
             SpawnAsteroid();
-        else
+
+        t = Random.Range(0f, 1f);
+        if (t < 0.6f)
             SpawnBox();
     }
 
@@ -47,7 +49,25 @@ public class EventManager : MonoBehaviour
         if (asteroidPrefab == null) return;
 
         Vector2 spawnPos = GetRandomEllipsePoint();
-        Vector2 targetPos = Vector2.zero; // always to center
+        float t = Random.Range(0f, 1f);
+        Vector2 targetPos = Vector2.zero;
+        if (t > AllStatsContainer.Instance.AsteroidHitChance)
+        {
+            Debug.Log("Missing asteroid!");
+            Vector2 dir = Vector2.right;
+            if (spawnPos.y > 0)
+            {
+                dir += Vector2.up;
+            }
+            else
+            {
+                dir += Vector2.down;
+            }
+            dir *= 2;
+            targetPos = Vector2.zero + dir; // center + small offset (to feel fear)
+            Vector2 asteroidCourse = targetPos - spawnPos;
+            targetPos += asteroidCourse.normalized * 20f;
+        }
 
         GameObject go = Instantiate(asteroidPrefab, spawnPos, Quaternion.identity);
         Asteroid asteroidComp = go.GetComponent<Asteroid>();
