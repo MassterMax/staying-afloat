@@ -12,6 +12,7 @@ public class GameStateManager : MonoBehaviour
     public static GameStateManager Instance { get; private set; }
     public event Action OnPauseStateChanged;
     private bool inStart = false;
+    HyperJumpController hyperJumpController;
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -26,6 +27,7 @@ public class GameStateManager : MonoBehaviour
         {
             Debug.Log("Called OnSceneLoaded in START_SCENE_NAME");
         }
+        hyperJumpController = FindAnyObjectByType<HyperJumpController>();
     }
 
     void Awake()
@@ -64,6 +66,11 @@ public class GameStateManager : MonoBehaviour
     }
 
     void LoadGame()
+    {
+        hyperJumpController.DoHyperJump(() => LoadAfterJump());
+    }
+
+    void LoadAfterJump()
     {
         inStart = false;
         SceneManager.LoadScene(GAME_SCENE_NAME);
