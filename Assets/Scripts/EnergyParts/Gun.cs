@@ -43,6 +43,7 @@ public class Gun : Offable
 
                 if (bulletPrefab != null)
                 {
+                    GameStateManager.Instance.Play("laserShoot");
                     GameObject go = Instantiate(bulletPrefab, origin + dir * 0.5f, Quaternion.identity);
                     go.transform.up = dir;
                     LaserShot shot = go.GetComponent<LaserShot>();

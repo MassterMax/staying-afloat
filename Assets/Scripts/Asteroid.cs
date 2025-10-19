@@ -52,6 +52,7 @@ public class Asteroid : MonoBehaviour
 
     public void Explode()
     {
+        GameStateManager.Instance.Play("explosion");
         Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

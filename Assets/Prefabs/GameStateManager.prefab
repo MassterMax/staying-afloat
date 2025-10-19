@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1930503954653564307}
   - component: {fileID: 8243366334776628060}
+  - component: {fileID: 669969262822953797}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: Untagged
@@ -45,3 +46,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1166510244132981171, guid: cf69daa66273e1649a77d8475313a942, type: 3}
+--- !u!114 &669969262822953797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3495527277870841029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa76d3f6825be20409e8cd3a954a96a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundClips:
+  - name: explosion
+    audioClip: {fileID: 8300000, guid: 9376139684b9eba4fb5dd76e7c040317, type: 3}
+    source: {fileID: 0}
+  - name: laserShoot
+    audioClip: {fileID: 8300000, guid: c51e62c927ca17944b41e525f284173e, type: 3}
+    source: {fileID: 0}
+  - name: pickupCoin
+    audioClip: {fileID: 8300000, guid: c23c2d5ad866fae4faf275189b7ade85, type: 3}
+    source: {fileID: 0}

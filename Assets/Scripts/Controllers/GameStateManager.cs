@@ -24,6 +24,7 @@ public class GameStateManager : MonoBehaviour
     private bool inStart = false;
     HyperJumpController hyperJumpController;
     TimeController timeController;
+    AudioManager audioManager;
 
     // saved state
     bool saved = false;
@@ -77,6 +78,7 @@ public class GameStateManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        audioManager = GetComponent<AudioManager>();
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -406,5 +408,10 @@ public class GameStateManager : MonoBehaviour
         Time.timeScale = 0f;
         // yield return new WaitForSecondsRealtime(3f);
         action?.Invoke();
+    }
+
+    public void Play(string name)
+    {
+        audioManager.Play(name);
     }
 }

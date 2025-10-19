@@ -142,6 +142,7 @@ public class StatsManager : MonoBehaviour
     {
         Debug.Log("Picked up energy: " + energy);
         AddEnergy(energy);
+        GameStateManager.Instance.Play("pickupCoin");
     }
 
     void HandleGoldenPickup()
