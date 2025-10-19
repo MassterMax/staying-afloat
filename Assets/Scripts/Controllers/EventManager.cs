@@ -9,6 +9,8 @@ public class EventManager : MonoBehaviour
     float maxTimeToNextEvent = 7f;
     float timeToNextEvent;
     float timer = 0f;
+    float massiveTimer = 0f;
+    float timeToNextMassiveEvent = 20f;
     TimeController timeController;
 
     void Awake()
@@ -31,13 +33,18 @@ public class EventManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        massiveTimer += Time.deltaTime;
         if (timer >= timeToNextEvent)
         {
             CreateEvent();
             timer = 0f;
             CalculateTimeToNextEvent();
         }
-        CreateMassiveEvent();
+        if (massiveTimer >= timeToNextMassiveEvent)
+        {
+            massiveTimer = 0f;
+            CreateMassiveEvent();
+        }
 
         // for debug
         if (Input.GetKeyDown(KeyCode.E))
@@ -48,15 +55,12 @@ public class EventManager : MonoBehaviour
 
     void CreateMassiveEvent()
     {
-        if (timeController.LastReportedGameHours % 24 == 12)
+        Debug.Log("CreateMassiveEvent");
+        int days = timeController.LastReportedGameHours / 24;
+        // int cnt = days / 2;
+        for (int i = 0; i < days; ++i)
         {
-            Debug.Log("CreateMassiveEvent");
-            int days = timeController.LastReportedGameHours / 24;
-            int cnt = days / 2;
-            for (int i = 0; i < cnt; ++i)
-            {
-                SpawnAsteroid();
-            }
+            SpawnAsteroid();
         }
     }
 

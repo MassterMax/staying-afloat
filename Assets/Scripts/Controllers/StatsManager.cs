@@ -147,6 +147,7 @@ public class StatsManager : MonoBehaviour
     void HandleGoldenPickup()
     {
         Debug.Log("Picked up golden box!!!");
+        GameStateManager.Instance.GoldenPickup();
     }
 
     public void UpdateUIControls()

@@ -47,6 +47,7 @@ public class UIManager : MonoBehaviour
 
     // pages
     [SerializeField] SimplePage simplePage;
+    [SerializeField] ChoosePage choosePage;
     void Awake()
     {
         statsManager = FindAnyObjectByType<StatsManager>();
@@ -80,6 +81,7 @@ public class UIManager : MonoBehaviour
         flyButton.interactable = false;
         // ShowHP(3)
         // HideSimplePage();
+        choosePage.gameObject.SetActive(false);
     }
 
     void OnDestroy()
@@ -246,6 +248,24 @@ public class UIManager : MonoBehaviour
     {
         simplePage.gameObject.SetActive(true);
         simplePage.SetText(text, nextButtonText);
+    }
+
+    public void ShowOptionPage(string text, string option1, string option2)
+    {
+        choosePage.gameObject.SetActive(true);
+        choosePage.SetText(text, option1, option2);
+    }
+
+    public void HideFistOptionPage()
+    {
+        choosePage.gameObject.SetActive(false);
+        GameStateManager.Instance.ResumeGameAfterOptionPage(true);
+    }
+
+    public void HideSecondOptionPage()
+    {
+        choosePage.gameObject.SetActive(false);
+        GameStateManager.Instance.ResumeGameAfterOptionPage(false);
     }
 
     public void HideSimplePage()

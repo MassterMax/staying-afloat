@@ -186,6 +186,15 @@ public class GameStateManager : MonoBehaviour
         OnPauseStateChanged?.Invoke();
     }
 
+    public void ResumeGameAfterOptionPage(bool firstOptionChoosed)
+    {
+        Debug.Log("firstOptionChoosed: " + firstOptionChoosed);
+        paused = false;
+        readingPage = false;
+        Time.timeScale = 1f;
+        OnPauseStateChanged?.Invoke();
+    }
+
     void StartGame()
     {
         if (saved)
@@ -206,6 +215,20 @@ public class GameStateManager : MonoBehaviour
             ShowDayPage(1);
             AllStatsContainer.Instance.ResetStats();
         }
+    }
+
+    public void GoldenPickup()
+    {
+        ShowOptionPage();
+    }
+
+    void ShowOptionPage()
+    {
+        Time.timeScale = 0f;
+        paused = true;
+        readingPage = true;
+        OnPauseStateChanged?.Invoke();
+        uiManager.ShowOptionPage(ReplicasController.Get("option_question"), "test1", "test2");
     }
 
     void ShowDayPage(int i)
