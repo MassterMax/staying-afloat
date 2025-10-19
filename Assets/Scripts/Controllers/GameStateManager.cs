@@ -247,6 +247,7 @@ public class GameStateManager : MonoBehaviour
 
     public void ResumeGameAfterOptionPage(bool firstOptionChoosed)
     {
+        Play("powerUp");
         Debug.Log("firstOptionChoosed: " + firstOptionChoosed);
         int selected = firstOptionChoosed ? firstOptionIndex : secondOptionIndex;
 
@@ -281,6 +282,7 @@ public class GameStateManager : MonoBehaviour
 
     void ShowOptionPage()
     {
+        Play("paperSheet");
         Time.timeScale = 0f;
         paused = true;
         readingPage = true;
@@ -292,6 +294,7 @@ public class GameStateManager : MonoBehaviour
 
     void ShowDayPage(int i)
     {
+        Play("paperSheet");
         Time.timeScale = 0f;
         paused = true;
         readingPage = true;

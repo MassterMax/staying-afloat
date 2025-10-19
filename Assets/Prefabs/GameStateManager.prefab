@@ -68,3 +68,9 @@ MonoBehaviour:
   - name: pickupCoin
     audioClip: {fileID: 8300000, guid: c23c2d5ad866fae4faf275189b7ade85, type: 3}
     source: {fileID: 0}
+  - name: powerUp
+    audioClip: {fileID: 8300000, guid: 6c3c7cf9a32f6a342b5af8685b2a65a1, type: 3}
+    source: {fileID: 0}
+  - name: paperSheet
+    audioClip: {fileID: 8300000, guid: bd0bcffbab3108c4bb887ba098f9230a, type: 3}
+    source: {fileID: 0}
