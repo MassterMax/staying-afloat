@@ -51,4 +51,10 @@ public class AudioManager : MonoBehaviour
         else
             globalMusicVolume = volume;
     }
+
+    public float GetVolume(bool sfx)
+    {
+        if (sfx) return globalFXVolume;
+        return globalMusicVolume;
+    }
 }

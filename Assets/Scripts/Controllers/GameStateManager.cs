@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -431,5 +432,10 @@ public class GameStateManager : MonoBehaviour
     public void ChangeVolume(float volume, bool sfx)
     {
         audioManager.ChangeVolume(volume, sfx);
+    }
+
+    public float GetVolume(bool sfx)
+    {
+        return audioManager.GetVolume(sfx);
     }
 }

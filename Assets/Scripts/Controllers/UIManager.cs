@@ -83,6 +83,9 @@ public class UIManager : MonoBehaviour
         // UpdateDistanceIncreaseUI();
         volumeSFXSlider.onValueChanged.AddListener(SFXVolumeChanged);
         volumeMusicSlider.onValueChanged.AddListener(MusicVolumeChanged);
+
+        volumeSFXSlider.value = GameStateManager.Instance.GetVolume(true);
+        volumeMusicSlider.value = GameStateManager.Instance.GetVolume(false);
     }
 
     void SFXVolumeChanged(float v)

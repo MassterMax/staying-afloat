@@ -43,6 +43,7 @@ public class HyperJumpController : MonoBehaviour
         // Потом выключаем/телепортируем корабль
         ship.SetActive(false);
         jumpPanel.gameObject.SetActive(true);
+        GameStateManager.Instance.Play("jump");
 
         for (float t = 0; t < 1f; t += Time.deltaTime * 4f)
         {
