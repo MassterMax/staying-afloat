@@ -48,6 +48,16 @@ public class UIManager : MonoBehaviour
     // pages
     [SerializeField] SimplePage simplePage;
     [SerializeField] ChoosePage choosePage;
+
+    // upgrades 
+    [SerializeField] Image regenUpgradeImage;
+    [SerializeField] TextMeshProUGUI regenUpgradeText;
+    [SerializeField] Image hookUpgradeImage;
+    [SerializeField] TextMeshProUGUI hookUpgradeText;
+    [SerializeField] Image gunUpgradeImage;
+    [SerializeField] TextMeshProUGUI gunUpgradeText;
+    [SerializeField] Image engineUpgradeImage;
+    [SerializeField] TextMeshProUGUI engineUpgradeText;
     void Awake()
     {
         statsManager = FindAnyObjectByType<StatsManager>();
@@ -272,5 +282,20 @@ public class UIManager : MonoBehaviour
     {
         simplePage.gameObject.SetActive(false);
         GameStateManager.Instance.ResumeGameAfterPage();
+    }
+
+    public void ShowUpgradeStats(int regenUpgrade, int hookUprgade, int gunUprgade, int engineUpgrade)
+    {
+        regenUpgradeImage.gameObject.SetActive(regenUpgrade > 0);
+        regenUpgradeText.text = regenUpgrade.ToString();
+
+        hookUpgradeImage.gameObject.SetActive(hookUprgade > 0);
+        hookUpgradeText.text = hookUprgade.ToString();
+
+        gunUpgradeImage.gameObject.SetActive(gunUprgade > 0);
+        gunUpgradeText.text = gunUprgade.ToString();
+
+        engineUpgradeImage.gameObject.SetActive(engineUpgrade > 0);
+        engineUpgradeText.text = engineUpgrade.ToString();
     }
 }

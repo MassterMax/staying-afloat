@@ -11,7 +11,7 @@ public class ScrollingBackground : MonoBehaviour
 
     public void SetSpeed(float newSpeed)
     {
-        Debug.Log("Setting background speed to: " + newSpeed);
+        // Debug.Log("Setting background speed to: " + newSpeed);
         speed = newSpeed;
     }
 }

@@ -32,6 +32,18 @@ public class GameStateManager : MonoBehaviour
     private float savedDistance;
     private float savedElapsedRealSeconds;
     private int savedLastReportedGameHours;
+    private int savedRegenUpgrade = 0;
+    private int savedHookUprgade = 0;
+    private int savedGunUprgade = 0;
+    private int savedEngineUpgrade = 0;
+    // upgrades
+    private int regenUpgrade = 0;
+    private int hookUprgade = 0;
+    private int gunUprgade = 0;
+    private int engineUpgrade = 0;
+    // options
+    int firstOptionIndex;
+    int secondOptionIndex;
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -157,10 +169,10 @@ public class GameStateManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    private void LoadLastSave()
-    {
-        SceneManager.LoadScene(GAME_SCENE_NAME);
-    }
+    // private void LoadLastSave()
+    // {
+    //     SceneManager.LoadScene(GAME_SCENE_NAME);
+    // }
 
     void HandlePause()
     {
@@ -186,15 +198,6 @@ public class GameStateManager : MonoBehaviour
         OnPauseStateChanged?.Invoke();
     }
 
-    public void ResumeGameAfterOptionPage(bool firstOptionChoosed)
-    {
-        Debug.Log("firstOptionChoosed: " + firstOptionChoosed);
-        paused = false;
-        readingPage = false;
-        Time.timeScale = 1f;
-        OnPauseStateChanged?.Invoke();
-    }
-
     void StartGame()
     {
         if (saved)
@@ -203,6 +206,12 @@ public class GameStateManager : MonoBehaviour
             AllStatsContainer.Instance.ResetStats();
             timeController.LoadSave(savedElapsedRealSeconds, savedLastReportedGameHours);
             statsManager.LoadSave(savedDistance, savedEnergy, savedHP);
+            regenUpgrade = savedRegenUpgrade;
+            hookUprgade = savedHookUprgade;
+            gunUprgade = savedGunUprgade;
+            engineUpgrade = savedEngineUpgrade;
+            AllStatsContainer.Instance.LoadUpgrades(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
+            uiManager.ShowUpgradeStats(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
             paused = false;
             readingPage = false;
             Time.timeScale = 1f;
@@ -214,12 +223,58 @@ public class GameStateManager : MonoBehaviour
             timeController.Reset();
             ShowDayPage(1);
             AllStatsContainer.Instance.ResetStats();
+
+            regenUpgrade = 0;
+            hookUprgade = 0;
+            gunUprgade = 0;
+            engineUpgrade = 0;
+            uiManager.ShowUpgradeStats(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
         }
     }
 
     public void GoldenPickup()
     {
+        firstOptionIndex = UnityEngine.Random.Range(1, 5);
+        secondOptionIndex = UnityEngine.Random.Range(0, 5);
+        if (secondOptionIndex == firstOptionIndex)
+        {
+            secondOptionIndex = 0;
+        }
         ShowOptionPage();
+    }
+
+    public void ResumeGameAfterOptionPage(bool firstOptionChoosed)
+    {
+        Debug.Log("firstOptionChoosed: " + firstOptionChoosed);
+        int selected = firstOptionChoosed ? firstOptionIndex : secondOptionIndex;
+
+        if (selected == 0)
+        {
+            statsManager.AddEnergyFromUpgrade(50f);
+        }
+        else if (selected == 1)
+        {
+            regenUpgrade += 1;
+        }
+        else if (selected == 2)
+        {
+            hookUprgade += 1;
+        }
+        else if (selected == 3)
+        {
+            gunUprgade += 1;
+        }
+        else if (selected == 4)
+        {
+            engineUpgrade += 1;
+        }
+
+        paused = false;
+        readingPage = false;
+        Time.timeScale = 1f;
+        OnPauseStateChanged?.Invoke();
+        AllStatsContainer.Instance.LoadUpgrades(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
+        uiManager.ShowUpgradeStats(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
     }
 
     void ShowOptionPage()
@@ -228,7 +283,9 @@ public class GameStateManager : MonoBehaviour
         paused = true;
         readingPage = true;
         OnPauseStateChanged?.Invoke();
-        uiManager.ShowOptionPage(ReplicasController.Get("option_question"), "test1", "test2");
+        string option1Replic = ReplicasController.Get("option_" + firstOptionIndex);
+        string option2Replic = ReplicasController.Get("option_" + secondOptionIndex);
+        uiManager.ShowOptionPage(ReplicasController.Get("option_question"), option1Replic, option2Replic);
     }
 
     void ShowDayPage(int i)
@@ -267,6 +324,10 @@ public class GameStateManager : MonoBehaviour
             savedEnergy = statsManager.Energy;
             savedDistance = statsManager.Distance;
             savedHP = statsManager.CurrentHp;
+            savedRegenUpgrade = regenUpgrade;
+            savedHookUprgade = hookUprgade;
+            savedGunUprgade = gunUprgade;
+            savedEngineUpgrade = engineUpgrade;
             saved = true;
         }
     }

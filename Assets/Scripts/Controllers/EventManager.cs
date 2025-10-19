@@ -57,8 +57,9 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("CreateMassiveEvent");
         int days = timeController.LastReportedGameHours / 24;
-        // int cnt = days / 2;
-        for (int i = 0; i < days; ++i)
+        days -= 5;
+        int cnt = Mathf.Min(days / 2, 5);
+        for (int i = 0; i < cnt; ++i)
         {
             SpawnAsteroid();
         }

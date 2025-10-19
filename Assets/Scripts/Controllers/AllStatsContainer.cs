@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class AllStatsContainer : MonoBehaviour
 {
+    const float powCoef = 0.7f;
     // start stats (for stats that can be improved)
     private int startMaxHP = 3;
     // current stats
@@ -19,7 +20,7 @@ public class AllStatsContainer : MonoBehaviour
     float defaultSliderValue = 0.4f;
     private float hookEnergyCost = 5f; // energy cost per hook launch
     private float gunEnergyCost = 3f; // energy cost per gun shot
-    private float gunShotDelay = 0.5f; // delay between gun shots
+    private float gunShotDelay = 0.1f; // delay between gun shots
     private float hookExtraDistance = 1f; // extra distance added to hook target point
     private float gunShotSpeed = 15f;
     private float gunShotLifetime = 1.5f;
@@ -34,13 +35,13 @@ public class AllStatsContainer : MonoBehaviour
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
     public float HookConsumptionRate => hookConsumptionRate;
-    public float SolarPanelRestoreRate => solarPanelRestoreRate;
+    public float SolarPanelRestoreRate => solarPanelRestoreRate + 0.5f * regenUpgrade;
     public float MaxEnergy => maxEnergy;
     public float MaxEngineSpeed => maxEngineSpeed;
     public float HookSpeed => hookSpeed;
     public float DefaultSliderValue => defaultSliderValue;
-    public float HookEnergyCost => hookEnergyCost;
-    public float GunEnergyCost => gunEnergyCost;
+    public float HookEnergyCost => hookEnergyCost * Mathf.Pow(powCoef, hookUprgade);
+    public float GunEnergyCost => gunEnergyCost * Mathf.Pow(powCoef, hookUprgade);
     public float GunShotDelay => gunShotDelay;
     public float HookExtraDistance => hookExtraDistance;
     public float GunShotSpeed => gunShotSpeed;
@@ -50,6 +51,22 @@ public class AllStatsContainer : MonoBehaviour
     public int MaxHp => maxHP;
     public float AsteroidHitChance => asteroidHitChance;
     public float EnergyToFly => energyToFly;
+    // upgrades
+    private int regenUpgrade = 0;
+    private int hookUprgade = 0;
+    private int gunUprgade = 0;
+    private int engineUpgrade = 0;
+    public void LoadUpgrades(int regenUpgrade, int hookUprgade, int gunUprgade, int engineUpgrade)
+    {
+        this.regenUpgrade = regenUpgrade;
+        this.hookUprgade = hookUprgade;
+        this.gunUprgade = gunUprgade;
+        this.engineUpgrade = engineUpgrade;
+        Debug.Log("this.regenUpgrade: " + this.regenUpgrade);
+        Debug.Log("this.hookUprgade: " + this.hookUprgade);
+        Debug.Log("this.gunUprgade: " + this.gunUprgade);
+        Debug.Log("this.engineUpgrade: " + this.engineUpgrade);
+    }
 
     public static AllStatsContainer Instance { get; private set; }
 
@@ -70,6 +87,7 @@ public class AllStatsContainer : MonoBehaviour
     {
         Debug.Log("Resetting stats");
         maxHP = startMaxHP;
+        LoadUpgrades(0, 0, 0, 0);
     }
 
     public float GetBlackHoleSpeed(float distance, int elapsedHours)
@@ -98,7 +116,7 @@ public class AllStatsContainer : MonoBehaviour
 
     public float GetShipEngineConsumptionRate(float engineEnergyValue)
     {
-        float res = Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef);
+        float res = Mathf.Pow(maxEngineEnergyCost * engineEnergyValue, engineEnergyCoef) * Mathf.Pow(powCoef, engineUpgrade);
         // Debug.Log("Calculating ship engine consumption rate: " + res);
         return res;
     }
@@ -151,11 +169,11 @@ public class AllStatsContainer : MonoBehaviour
     {
         if (elapsedHours >= 10 * 24)
         {
-            return 0.15f;
+            return 0.3f;
         }
         if (elapsedHours >= 5 * 24)
         {
-            return 0.1f;
+            return 0.15f;
         }
         return startGoldenBoxChance;
     }

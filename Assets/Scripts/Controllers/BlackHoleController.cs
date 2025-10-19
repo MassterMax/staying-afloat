@@ -62,7 +62,7 @@ public class BlackHoleController : MonoBehaviour
     void UpdateDistanceIncreaseBG()
     {
         float val = statsManager.RealDistanceIncrease;
-        Debug.Log("Updating background speed based on distance increase: " + val);
+        // Debug.Log("Updating background speed based on distance increase: " + val);
         if (scrollingBackground == null)
         {
             scrollingBackground = FindFirstObjectByType<ScrollingBackground>();

@@ -177,6 +177,11 @@ public class StatsManager : MonoBehaviour
         AddEnergy(100);
     }
 
+    public void AddEnergyFromUpgrade(float amount)
+    {
+        AddEnergy(amount);
+    }
+
     public void LoadSave(float _distance, float _energy, int _hp)
     {
         distance = _distance;

@@ -31,8 +31,8 @@ public class Gun : Offable
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            if (timeFromLastShot < AllStatsContainer.Instance.GunShotDelay)
-                return;
+            // if (timeFromLastShot < AllStatsContainer.Instance.GunShotDelay)
+            //     return;
 
             if (statsManager.TryConsumeEnergy(AllStatsContainer.Instance.GunEnergyCost))
             {
