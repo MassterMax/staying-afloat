@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bh
-  m_Shader: {fileID: 4800000, guid: b273b4efc09d1af4cb33aceddd08c5e7, type: 3}
+  m_Name: BH
+  m_Shader: {fileID: 4800000, guid: fa7b89127b135a245804cb7cb1050388, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -61,11 +61,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BlackHoleX: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _GlitchIntensity: 0.082
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -75,15 +75,16 @@ Material:
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SqueezeY: 0.2
     - _SrcBlend: 1
-    - _Strength: 0.741
-    - _StrengthX: 0
-    - _StrengthY: 0
+    - _Strength: 0.266
+    - _TimeScale: 2
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _Center: {r: 1.8, g: 0.5, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Direction: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Radius: {r: 0.5, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

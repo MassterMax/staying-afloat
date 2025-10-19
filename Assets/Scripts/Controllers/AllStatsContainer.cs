@@ -69,6 +69,9 @@ public class AllStatsContainer : MonoBehaviour
 
     public float GetBlackHoleSpeed(float distance, int elapsedHours)
     {
+        if (distance < 0) return -500f;
+        // for debug only
+        // return -10f;
         float baseSpeed = -0.1f * (elapsedHours / 24); // increases by -0.1f every 24 hours
         // return -5f;
         if (distance >= 60f)

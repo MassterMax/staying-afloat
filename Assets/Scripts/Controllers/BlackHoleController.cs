@@ -7,12 +7,15 @@ public class BlackHoleController : MonoBehaviour
     float maxScale = 1.0f; // distance = -100 or less
     StatsManager statsManager;
     ScrollingBackground scrollingBackground;
+    BlackHoleWarpEffect blackHoleWarpEffect;
+    int lastDistanceEffect = 1000;
 
     void Awake()
     {
         statsManager = GetComponent<StatsManager>();
         // scrollingBackground = FindFirstObjectByType<ScrollingBackground>();
         statsManager.OnDistanceIncreaseChanged += UpdateDistanceIncreaseBG;
+        blackHoleWarpEffect = FindFirstObjectByType<BlackHoleWarpEffect>();
     }
 
     void Start()
@@ -40,11 +43,18 @@ public class BlackHoleController : MonoBehaviour
         if (distance >= 0)
         {
             scale = Mathf.Lerp(maxScale, minScale, distance / 100f);
+            int newDistanceEffect = (int)(distance / 1);
+            // if (newDistanceEffect != lastDistanceEffect)
+            // {
+            //     lastDistanceEffect = newDistanceEffect;
+            blackHoleWarpEffect.UpdateDistance(distance);
+            // }
         }
         else
         {
             float t = Mathf.InverseLerp(0f, -100f, distance); // 0 при 0, 1 при -100
             scale = Mathf.Lerp(1f, 2.2f, t);
+            blackHoleWarpEffect.UpdateDistance(100f);
         }
         blackHole.transform.localScale = new Vector3(scale, 1, 1);
     }
