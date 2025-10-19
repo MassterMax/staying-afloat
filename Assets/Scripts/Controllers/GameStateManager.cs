@@ -427,4 +427,9 @@ public class GameStateManager : MonoBehaviour
     {
         audioManager.PauseBH();
     }
+
+    public void ChangeVolume(float volume, bool sfx)
+    {
+        audioManager.ChangeVolume(volume, sfx);
+    }
 }

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    float globalFXVolume = 0.2f;
+    float globalFXVolume = 0.1f;
+    float globalMusicVolume = 0.1f;
     public SoundClip[] soundClips;
     public SoundClip bhClip;
     void Awake()
@@ -41,5 +42,13 @@ public class AudioManager : MonoBehaviour
     public void PauseBH()
     {
         bhClip.source.Pause();
+    }
+
+    public void ChangeVolume(float volume, bool sfx)
+    {
+        if (sfx)
+            globalFXVolume = volume;
+        else
+            globalMusicVolume = volume;
     }
 }

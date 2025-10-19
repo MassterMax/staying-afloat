@@ -58,6 +58,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI gunUpgradeText;
     [SerializeField] Image engineUpgradeImage;
     [SerializeField] TextMeshProUGUI engineUpgradeText;
+
+    // sliders
+    [SerializeField] Slider volumeSFXSlider;
+    [SerializeField] Slider volumeMusicSlider;
     void Awake()
     {
         statsManager = FindAnyObjectByType<StatsManager>();
@@ -77,6 +81,18 @@ public class UIManager : MonoBehaviour
 
         // UpdateDistanceUI();
         // UpdateDistanceIncreaseUI();
+        volumeSFXSlider.onValueChanged.AddListener(SFXVolumeChanged);
+        volumeMusicSlider.onValueChanged.AddListener(MusicVolumeChanged);
+    }
+
+    void SFXVolumeChanged(float v)
+    {
+        GameStateManager.Instance.ChangeVolume(v, true);
+    }
+
+    void MusicVolumeChanged(float v)
+    {
+        GameStateManager.Instance.ChangeVolume(v, false);
     }
 
     void Start()
