@@ -18,8 +18,8 @@ public class AllStatsContainer : MonoBehaviour
     private float maxEngineSpeed = 8f; // maximum speed of the engine
     private float hookSpeed = 10f;
     float defaultSliderValue = 0.25f;
-    private float hookEnergyCost = 5f; // energy cost per hook launch
-    private float gunEnergyCost = 3f; // energy cost per gun shot
+    private float hookEnergyCost = 6f; // energy cost per hook launch
+    private float gunEnergyCost = 5f; // energy cost per gun shot
     private float gunShotDelay = 0.1f; // delay between gun shots
     private float hookExtraDistance = 1f; // extra distance added to hook target point
     private float gunShotSpeed = 15f;
@@ -169,11 +169,11 @@ public class AllStatsContainer : MonoBehaviour
     {
         if (elapsedHours >= 10 * 24)
         {
-            return 0.2f;
+            return 0.25f;
         }
         if (elapsedHours >= 5 * 24)
         {
-            return 0.1f;
+            return 0.15f;
         }
         return startGoldenBoxChance;
     }
