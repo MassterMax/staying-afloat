@@ -8,7 +8,7 @@ public class BlackHoleController : MonoBehaviour
     StatsManager statsManager;
     ScrollingBackground scrollingBackground;
     BlackHoleWarpEffect blackHoleWarpEffect;
-    int lastDistanceEffect = 1000;
+    // int  lastDistanceEffect = 1000;
 
     void Awake()
     {

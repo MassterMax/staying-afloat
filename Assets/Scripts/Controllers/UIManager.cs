@@ -44,6 +44,9 @@ public class UIManager : MonoBehaviour
 
     StatsManager statsManager;
     EnergyPartsController energyPartsController;
+
+    // pages
+    [SerializeField] SimplePage simplePage;
     void Awake()
     {
         statsManager = FindAnyObjectByType<StatsManager>();
@@ -75,6 +78,7 @@ public class UIManager : MonoBehaviour
         energySlider.value = AllStatsContainer.Instance.DefaultSliderValue;
         flyButton.interactable = false;
         // ShowHP(3)
+        // HideSimplePage();
     }
 
     void OnDestroy()
@@ -235,5 +239,17 @@ public class UIManager : MonoBehaviour
             else
                 hpBar[i].SetActive(false);
         }
+    }
+
+    public void ShowSimplePage(string text, string nextButtonText = null)
+    {
+        simplePage.gameObject.SetActive(true);
+        simplePage.SetText(text, nextButtonText);
+    }
+
+    public void HideSimplePage()
+    {
+        simplePage.gameObject.SetActive(false);
+        GameStateManager.Instance.ResumeGameAfterPage();
     }
 }

@@ -13,6 +13,7 @@ public class GameStateManager : MonoBehaviour
     UIManager uiManager;
     StatsManager statsManager;
     BlackHoleController blackHoleController;
+    bool readingPage = false;
     bool paused = false;
     bool end = false;
     bool canReturn = false;
@@ -21,6 +22,7 @@ public class GameStateManager : MonoBehaviour
     public event Action OnPauseStateChanged;
     private bool inStart = false;
     HyperJumpController hyperJumpController;
+    TimeController timeController;
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -31,8 +33,11 @@ public class GameStateManager : MonoBehaviour
             uiManager = FindAnyObjectByType<UIManager>();
             statsManager = FindAnyObjectByType<StatsManager>();
             blackHoleController = FindAnyObjectByType<BlackHoleController>();
+            timeController = FindAnyObjectByType<TimeController>();
+            timeController.LastReportedGameHoursUpdated += HandleLastReportedGameHoursUpdated;
             AllStatsContainer.Instance.ResetStats();
-            ResumeGame();
+            // ResumeGame();
+            StartGame();
         }
         else if (scene.name == START_SCENE_NAME)
         {
@@ -77,6 +82,12 @@ public class GameStateManager : MonoBehaviour
         if (inStart && Input.anyKeyDown)
         {
             LoadGame();
+        }
+
+        if (readingPage)
+        {
+            // Debug.Log("GameStateManager: Inside readingPage");
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
@@ -134,18 +145,43 @@ public class GameStateManager : MonoBehaviour
         OnPauseStateChanged?.Invoke();
     }
 
-    void ResumeGame()
+    public void ResumeGameAfterPage()
     {
         paused = false;
+        readingPage = false;
         Time.timeScale = 1f;
-        uiManager.HandlePause(paused);
         OnPauseStateChanged?.Invoke();
+    }
+
+    void StartGame()
+    {
+        ShowDayPage(1);
+    }
+
+    void ShowDayPage(int i)
+    {
+        Time.timeScale = 0f;
+        paused = true;
+        readingPage = true;
+        OnPauseStateChanged?.Invoke();
+        uiManager.ShowSimplePage(ReplicasController.Get("day_" + i));
+    }
+
+    void HandleLastReportedGameHoursUpdated()
+    {
+        if (timeController.GetLastReportedGameHours() == 24 * 2)
+        {
+            ShowDayPage(3);
+        }
     }
 
     private void OnDestroy()
     {
         if (Instance == this)
+        {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            timeController.LastReportedGameHoursUpdated -= HandleLastReportedGameHoursUpdated;
+        }
     }
 
     public void LoseBlackHole()

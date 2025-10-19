@@ -40,6 +40,7 @@ public class Hook : Offable
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
         if (!IsOn)
             return;
 

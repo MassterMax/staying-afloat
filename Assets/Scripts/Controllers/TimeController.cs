@@ -1,10 +1,8 @@
+using System;
 using UnityEngine;
 
 public class TimeController : MonoBehaviour
 {
-    [Tooltip("If true, timer starts automatically on Start()")]
-    [SerializeField] private bool startOnAwake = false;
-
     // elapsed real seconds since timer started
     private float elapsedRealSeconds = 0f;
     // last reported total game hours (integer)
@@ -12,6 +10,7 @@ public class TimeController : MonoBehaviour
     private bool running = false;
 
     UIManager uiManager;
+    public event Action LastReportedGameHoursUpdated;
 
     void Awake()
     {
@@ -37,6 +36,7 @@ public class TimeController : MonoBehaviour
         {
             lastReportedGameHours = totalGameHours;
             PushTimeToUI();
+            LastReportedGameHoursUpdated.Invoke();
         }
     }
 

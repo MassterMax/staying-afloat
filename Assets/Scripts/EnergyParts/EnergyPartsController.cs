@@ -26,6 +26,7 @@ public class EnergyPartsController : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
         // debug 
         if (Input.GetKeyDown(KeyCode.R))
         {

@@ -21,6 +21,7 @@ public class Gun : Offable
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
         if (!IsOn)
             return;
         timeFromLastShot += Time.deltaTime;
