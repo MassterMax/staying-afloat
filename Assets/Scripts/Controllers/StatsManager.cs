@@ -69,6 +69,11 @@ public class StatsManager : MonoBehaviour
         OnEnergyIncreaseChanged?.Invoke();
     }
 
+    public void ForceUpdateEnergyIncrease()
+    {
+        energyPartsController.SetEnergyIncrease();
+    }
+
     public void SetBaseDistanceIncrease(float amount)
     {
         // Debug.Log("Setting base distance increase: " + amount);

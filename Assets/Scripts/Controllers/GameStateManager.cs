@@ -221,6 +221,8 @@ public class GameStateManager : MonoBehaviour
             readingPage = false;
             Time.timeScale = 1f;
             OnPauseStateChanged?.Invoke();
+            statsManager.ForceUpdateEnergyIncrease();
+
         }
         else
         {
@@ -234,6 +236,8 @@ public class GameStateManager : MonoBehaviour
             gunUprgade = 0;
             engineUpgrade = 0;
             uiManager.ShowUpgradeStats(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
+            statsManager.ForceUpdateEnergyIncrease();
+
         }
     }
 
@@ -281,6 +285,8 @@ public class GameStateManager : MonoBehaviour
         OnPauseStateChanged?.Invoke();
         AllStatsContainer.Instance.LoadUpgrades(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
         uiManager.ShowUpgradeStats(regenUpgrade, hookUprgade, gunUprgade, engineUpgrade);
+        // todo redraw ui
+        statsManager.ForceUpdateEnergyIncrease();
     }
 
     void ShowOptionPage()

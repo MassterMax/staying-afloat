@@ -32,10 +32,10 @@ public class TimeController : MonoBehaviour
         if (!running) return;
 
         // debug
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            elapsedRealSeconds += 10f;
-        }
+        // if (Input.GetKeyDown(KeyCode.S))
+        // {
+        //     elapsedRealSeconds += 10f;
+        // }
 
         elapsedRealSeconds += Time.deltaTime;
         // 1 real sec == 1 game hour

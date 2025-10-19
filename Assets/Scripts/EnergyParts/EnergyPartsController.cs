@@ -28,10 +28,10 @@ public class EnergyPartsController : MonoBehaviour
     {
         if (Time.timeScale == 0f) return;
         // debug 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            statsManager.IncreaseEnergyDebug();
-        }
+        // if (Input.GetKeyDown(KeyCode.R))
+        // {
+        //     statsManager.IncreaseEnergyDebug();
+        // }
 
         bool input = false;
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -57,7 +57,7 @@ public class EnergyPartsController : MonoBehaviour
         }
     }
 
-    void SetEnergyIncrease()
+    public void SetEnergyIncrease()
     {
         float totalIncrease = 0f;
         if (hook.IsOn)

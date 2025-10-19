@@ -18,7 +18,7 @@ public class AllStatsContainer : MonoBehaviour
     private float maxEngineSpeed = 8f; // maximum speed of the engine
     private float hookSpeed = 10f;
     float defaultSliderValue = 0.25f;
-    private float hookEnergyCost = 6f; // energy cost per hook launch
+    private float hookEnergyCost = 7f; // energy cost per hook launch
     private float gunEnergyCost = 5f; // energy cost per gun shot
     private float gunShotDelay = 0.1f; // delay between gun shots
     private float hookExtraDistance = 1f; // extra distance added to hook target point

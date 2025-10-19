@@ -10,7 +10,9 @@ public class EventManager : MonoBehaviour
     float timeToNextEvent;
     float timer = 0f;
     float massiveTimer = 0f;
-    float timeToNextMassiveEvent = 20f;
+    float massiveTimer2 = 0f;
+    float timeToNextMassiveEvent = 19f;
+    float timeToNextMassiveEvent2 = 12f;
     TimeController timeController;
 
     void Awake()
@@ -34,6 +36,7 @@ public class EventManager : MonoBehaviour
     {
         timer += Time.deltaTime;
         massiveTimer += Time.deltaTime;
+        massiveTimer2 += Time.deltaTime;
         if (timer >= timeToNextEvent)
         {
             CreateEvent();
@@ -45,12 +48,17 @@ public class EventManager : MonoBehaviour
             massiveTimer = 0f;
             CreateMassiveEvent();
         }
+        if (massiveTimer2 >= timeToNextMassiveEvent2)
+        {
+            massiveTimer2 = 0f;
+            CreateMassiveEvent2();
+        }
 
         // for debug
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            CreateEvent();
-        }
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+        //     CreateEvent();
+        // }
     }
 
     void CreateMassiveEvent()
@@ -58,7 +66,18 @@ public class EventManager : MonoBehaviour
         Debug.Log("CreateMassiveEvent");
         int days = timeController.LastReportedGameHours / 24;
         days -= 5;
-        int cnt = Mathf.Min(days / 2, 5);
+        int cnt = Mathf.Min(days / 2, 4);
+        for (int i = 0; i < cnt; ++i)
+        {
+            SpawnAsteroid();
+        }
+    }
+
+    void CreateMassiveEvent2()
+    {
+        Debug.Log("CreateMassiveEvent2");
+        int days = timeController.LastReportedGameHours / 24;
+        int cnt = Mathf.Min(days / 2, 3);
         for (int i = 0; i < cnt; ++i)
         {
             SpawnAsteroid();
@@ -92,6 +111,8 @@ public class EventManager : MonoBehaviour
 
         if (!created)
         {
+            if (AllStatsContainer.Instance.GetAsteroidChance(timeController.GetLastReportedGameHours()) > 0)
+                SpawnAsteroid();
             SpawnBox();
         }
     }

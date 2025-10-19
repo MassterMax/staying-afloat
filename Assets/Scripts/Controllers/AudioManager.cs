@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    float globalFXVolume = 0.1f;
-    float globalMusicVolume = 0.1f;
+    float globalFXVolume = 0.2f;
+    float globalMusicVolume = 0.2f;
     public SoundClip[] soundClips;
     public SoundClip bhClip;
     public SoundClip musicClip;
