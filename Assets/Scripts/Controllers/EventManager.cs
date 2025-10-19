@@ -102,6 +102,7 @@ public class EventManager : MonoBehaviour
         boxComp.Init(spawnPos, targetPos, null, energyLoot);
     }
 
+    // will give improvements (not implemented yet)
     void SpawnGoldenBox()
     {
         Vector2 spawnPos = GetRandomEllipsePoint();
