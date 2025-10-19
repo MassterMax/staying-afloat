@@ -472,7 +472,21 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tinyShip20_0: 6548452131946280331
+      tinyShip20_1: -843486487471251224
+      tinyShip20_10: 626876780768976646
+      tinyShip20_11: -2237629102266986318
+      tinyShip20_12: -8553601990842744636
+      tinyShip20_13: -6412723901998951346
+      tinyShip20_2: -2109699851164342442
+      tinyShip20_3: 7488583051233082700
+      tinyShip20_4: -3822675429761870040
+      tinyShip20_5: -5172201932639352523
+      tinyShip20_6: -7783620435936585724
+      tinyShip20_7: -989925414352172211
+      tinyShip20_8: -4756646689426403876
+      tinyShip20_9: -8042090142300775611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

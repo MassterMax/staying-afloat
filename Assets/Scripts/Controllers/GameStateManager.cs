@@ -222,7 +222,7 @@ public class GameStateManager : MonoBehaviour
             Time.timeScale = 1f;
             OnPauseStateChanged?.Invoke();
             statsManager.ForceUpdateEnergyIncrease();
-
+            uiManager.HideSimplePage();
         }
         else
         {
