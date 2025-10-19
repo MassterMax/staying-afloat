@@ -37,11 +37,26 @@ public class EventManager : MonoBehaviour
             timer = 0f;
             CalculateTimeToNextEvent();
         }
+        CreateMassiveEvent();
 
         // for debug
         if (Input.GetKeyDown(KeyCode.E))
         {
             CreateEvent();
+        }
+    }
+
+    void CreateMassiveEvent()
+    {
+        if (timeController.LastReportedGameHours % 24 == 12)
+        {
+            Debug.Log("CreateMassiveEvent");
+            int days = timeController.LastReportedGameHours / 24;
+            int cnt = days / 2;
+            for (int i = 0; i < cnt; ++i)
+            {
+                SpawnAsteroid();
+            }
         }
     }
 
