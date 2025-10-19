@@ -123,6 +123,8 @@ public class GameStateManager : MonoBehaviour
 
     public void FlyAway(Action action)
     {
+        if (end) return; // already finished
+
         saved = false;
         end = true;
         hyperJumpController.DoHyperJump(() =>
@@ -257,6 +259,7 @@ public class GameStateManager : MonoBehaviour
 
     public void LoseBlackHole()
     {
+        if (end) return; // already finished
         end = true;
         statsManager.LoseAllEnergy();
         uiManager.HideShipUIPanel();
@@ -283,6 +286,8 @@ public class GameStateManager : MonoBehaviour
 
     public void LoseExplosion()
     {
+        if (end) return; // already finished
+
         end = true;
         statsManager.LoseAllEnergy();
         uiManager.HideShipUIPanel();
