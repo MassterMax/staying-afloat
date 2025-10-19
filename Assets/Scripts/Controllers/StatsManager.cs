@@ -35,6 +35,7 @@ public class StatsManager : MonoBehaviour
             energy = AllStatsContainer.Instance.MaxEnergy;
         if (energy < 0)
         {
+            GameStateManager.Instance.Play("shutdown");
             energy = 0;
             Debug.LogWarning("Shutdown systems");
             energyPartsController.TurnOffAll();

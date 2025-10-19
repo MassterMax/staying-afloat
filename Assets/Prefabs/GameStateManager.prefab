@@ -74,3 +74,15 @@ MonoBehaviour:
   - name: paperSheet
     audioClip: {fileID: 8300000, guid: bd0bcffbab3108c4bb887ba098f9230a, type: 3}
     source: {fileID: 0}
+  - name: shutdown
+    audioClip: {fileID: 8300000, guid: 1b1476a7c8da20e418896f411b7d3bc8, type: 3}
+    source: {fileID: 0}
+  - name: engine
+    audioClip: {fileID: 8300000, guid: 96bcfd924f1a20b45bdb5855e3e5f567, type: 3}
+    source: {fileID: 0}
+  - name: hitHurt
+    audioClip: {fileID: 8300000, guid: b781163c0833c354785cb0966dc2763c, type: 3}
+    source: {fileID: 0}
+  - name: click
+    audioClip: {fileID: 8300000, guid: 6d3d311ac93da1f4cb43afa5768a4250, type: 3}
+    source: {fileID: 0}

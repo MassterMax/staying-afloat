@@ -914,6 +914,7 @@ GameObject:
   - component: {fileID: 441325737}
   - component: {fileID: 441325736}
   - component: {fileID: 441325735}
+  - component: {fileID: 441325738}
   m_Layer: 5
   m_Name: FlyButton
   m_TagString: Untagged
@@ -1035,6 +1036,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441325733}
   m_CullTransparentMesh: 1
+--- !u!114 &441325738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441325733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a367aa0a5205d54d909fac886cfe3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: click
 --- !u!1 &478582123
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2423,7 @@ GameObject:
   - component: {fileID: 837032027}
   - component: {fileID: 837032026}
   - component: {fileID: 837032025}
+  - component: {fileID: 837032028}
   m_Layer: 5
   m_Name: HookButton
   m_TagString: Untagged
@@ -2517,6 +2532,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837032023}
   m_CullTransparentMesh: 1
+--- !u!114 &837032028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837032023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a367aa0a5205d54d909fac886cfe3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: click
 --- !u!1 &843340811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3887,6 +3915,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1249356893}
   - component: {fileID: 1249356894}
+  - component: {fileID: 1249356895}
   m_Layer: 5
   m_Name: Engine
   m_TagString: Untagged
@@ -3967,6 +3996,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1249356895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249356892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a367aa0a5205d54d909fac886cfe3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: engine
 --- !u!1 &1290770434
 GameObject:
   m_ObjectHideFlags: 0
@@ -6242,6 +6284,7 @@ GameObject:
   - component: {fileID: 1893270865}
   - component: {fileID: 1893270864}
   - component: {fileID: 1893270863}
+  - component: {fileID: 1893270866}
   m_Layer: 5
   m_Name: GunButton
   m_TagString: Untagged
@@ -6350,6 +6393,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893270861}
   m_CullTransparentMesh: 1
+--- !u!114 &1893270866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893270861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a367aa0a5205d54d909fac886cfe3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: click
 --- !u!1 &1916228331
 GameObject:
   m_ObjectHideFlags: 0

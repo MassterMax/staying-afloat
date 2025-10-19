@@ -36,11 +36,13 @@ public class EnergyPartsController : MonoBehaviour
         bool input = false;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            GameStateManager.Instance.Play("click");
             input = true;
             ChangeHookState();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+             GameStateManager.Instance.Play("click");
             input = true;
             ChangeGunState();
         }

@@ -52,6 +52,7 @@ public class Hook : Offable
 
             if (statsManager.TryConsumeEnergy(AllStatsContainer.Instance.HookEnergyCost))
             {
+                GameStateManager.Instance.Play("hitHurt");
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 // increase click point distance as a help to reach further
                 Vector2 extra = (mousePos - (Vector2)transform.position).normalized;
@@ -135,6 +136,7 @@ public class Hook : Offable
 
         if (isMovingToClicked && other.CompareTag("Pullable"))
         {
+            GameStateManager.Instance.Play("hitHurt");
             Debug.Log("Hooked onto: " + other.gameObject.name);
             grabbedObject = other.GetComponent<Pullable>();
             grabbedObject.Hook();
