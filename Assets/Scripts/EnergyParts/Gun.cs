@@ -26,7 +26,7 @@ public class Gun : Offable
             return;
         timeFromLastShot += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.Space))
         {
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;

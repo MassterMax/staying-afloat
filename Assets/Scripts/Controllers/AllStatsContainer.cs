@@ -26,6 +26,11 @@ public class AllStatsContainer : MonoBehaviour
     private float asteroidHitChance = 0.8f;
     private float energyToFly = 1000f;
 
+    // chances
+    private float startBoxChance = 0.5f;
+    private float startGoldenBoxChance = 0f;
+    private float startAsteroidChance = 0f;
+
     // now getters
     public float GunConsumptionRate => gunConsumptionRate;
     public float HookConsumptionRate => hookConsumptionRate;
@@ -106,5 +111,32 @@ public class AllStatsContainer : MonoBehaviour
         if (p < 0.6f) return 10f;
         if (p < 0.95f) return 15f;
         return 30f;
+    }
+
+    public float GetBoxChance(int elapsedHours)
+    {
+        if (elapsedHours >= 24)
+        {
+            return 0.6f;
+        }
+        return startBoxChance;
+    }
+
+    public float GetAsteroidChance(int elapsedHours)
+    {
+        if (elapsedHours >= 24)
+        {
+            return 0.4f;
+        }
+        return startAsteroidChance;
+    }
+
+    public float GetGoldenBoxChance(int elapsedHours)
+    {
+        if (elapsedHours >= 24)
+        {
+            return 0.1f;
+        }
+        return startGoldenBoxChance;
     }
 }

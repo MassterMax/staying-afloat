@@ -49,15 +49,15 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("Event Created");
         float t = Random.Range(0f, 1f);
-        if (t < 0.4f)
+        if (t < AllStatsContainer.Instance.GetAsteroidChance(timeController.GetLastReportedGameHours()))
             SpawnAsteroid();
 
         t = Random.Range(0f, 1f);
-        if (t < 0.6f)
+        if (t < AllStatsContainer.Instance.GetBoxChance(timeController.GetLastReportedGameHours()))
             SpawnBox();
 
         t = Random.Range(0f, 1f);
-        if (t < 0.1f)
+        if (t < AllStatsContainer.Instance.GetGoldenBoxChance(timeController.GetLastReportedGameHours()))
             SpawnGoldenBox();
     }
 

@@ -79,9 +79,13 @@ public class GameStateManager : MonoBehaviour
             return;
         }
 
-        if (inStart && Input.anyKeyDown)
+        if (inStart)
         {
-            LoadGame();
+            if (Input.anyKeyDown)
+            {
+                LoadGame();
+            }
+            return;
         }
 
         if (readingPage)
@@ -169,9 +173,17 @@ public class GameStateManager : MonoBehaviour
 
     void HandleLastReportedGameHoursUpdated()
     {
+        if (timeController.GetLastReportedGameHours() == 24 * 1)
+        {
+            ShowDayPage(2);
+        }
         if (timeController.GetLastReportedGameHours() == 24 * 2)
         {
             ShowDayPage(3);
+        }
+        if (timeController.GetLastReportedGameHours() == 24 * 4)
+        {
+            ShowDayPage(5);
         }
     }
 
