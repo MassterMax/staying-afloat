@@ -86,3 +86,7 @@ MonoBehaviour:
   - name: click
     audioClip: {fileID: 8300000, guid: 6d3d311ac93da1f4cb43afa5768a4250, type: 3}
     source: {fileID: 0}
+  bhClip:
+    name: bh
+    audioClip: {fileID: 8300000, guid: 30b5ef3155ee53c4e8522d01dfca41ff, type: 3}
+    source: {fileID: 0}

@@ -417,4 +417,14 @@ public class GameStateManager : MonoBehaviour
     {
         audioManager.Play(name);
     }
+
+    public void ContinuePlayBH()
+    {
+        audioManager.PlayBH();
+    }
+
+    public void StopPlayBH()
+    {
+        audioManager.PauseBH();
+    }
 }

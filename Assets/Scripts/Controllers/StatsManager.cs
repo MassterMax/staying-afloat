@@ -3,6 +3,7 @@ using System;
 
 public class StatsManager : MonoBehaviour
 {
+    private const float LOSE_ALL = -10000f;
     private int currentHP;
     EnergyPartsController energyPartsController;
     UIManager uiManager;
@@ -35,7 +36,8 @@ public class StatsManager : MonoBehaviour
             energy = AllStatsContainer.Instance.MaxEnergy;
         if (energy < 0)
         {
-            GameStateManager.Instance.Play("shutdown");
+            if (amount != LOSE_ALL)
+                GameStateManager.Instance.Play("shutdown");
             energy = 0;
             Debug.LogWarning("Shutdown systems");
             energyPartsController.TurnOffAll();
@@ -120,11 +122,23 @@ public class StatsManager : MonoBehaviour
         distance += realDistanceIncrease * Time.fixedDeltaTime;
         if (distance < 0 && !lost)
         {
+            GameStateManager.Instance.StopPlayBH();
             lost = true;
             distance = 0;
             // loseDistanceIncrease = -10f;
             Debug.LogWarning("You lose!!!!!!!!!!!!!");
             GameStateManager.Instance.LoseBlackHole();
+        }
+        if (distance < 20)
+        {
+            if (!lost)
+                GameStateManager.Instance.ContinuePlayBH();
+            // play blackhole approaching sound in loop
+        }
+        else
+        {
+            GameStateManager.Instance.StopPlayBH();
+            // stop playing in loop
         }
         // Debug.Log("Distance: " + distance);
         OnDistanceChanged?.Invoke();
@@ -171,7 +185,7 @@ public class StatsManager : MonoBehaviour
 
     public void LoseAllEnergy()
     {
-        AddEnergy(-10000f);
+        AddEnergy(LOSE_ALL);
     }
 
     public void IncreaseEnergyDebug()
