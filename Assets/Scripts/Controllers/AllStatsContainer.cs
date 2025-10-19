@@ -8,7 +8,7 @@ public class AllStatsContainer : MonoBehaviour
     private int maxHP = 3;
     private float gunConsumptionRate = 0.5f; // Energy consumed per second when the gun is on
     private float hookConsumptionRate = 0.5f; // Energy consumed per second when the hook is on
-    private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
+    private float solarPanelRestoreRate = 4f; // Energy restored per second by the solar panel
     private float maxEnergy = 2000;
     private float startEnergy = 100;
     private float startDistance = 100;
@@ -115,25 +115,45 @@ public class AllStatsContainer : MonoBehaviour
 
     public float GetBoxChance(int elapsedHours)
     {
+        if (elapsedHours >= 10 * 24)
+        {
+            return 0.7f;
+        }
+        if (elapsedHours >= 5 * 24)
+        {
+            return 0.5f;
+        }
         if (elapsedHours >= 24)
         {
-            return 0.6f;
+            return 0.35f;
         }
         return startBoxChance;
     }
 
     public float GetAsteroidChance(int elapsedHours)
     {
-        if (elapsedHours >= 24)
+        if (elapsedHours >= 10 * 24)
+        {
+            return 0.5f;
+        }
+        if (elapsedHours >= 5 * 24)
         {
             return 0.4f;
+        }
+        if (elapsedHours >= 24)
+        {
+            return 0.15f;
         }
         return startAsteroidChance;
     }
 
     public float GetGoldenBoxChance(int elapsedHours)
     {
-        if (elapsedHours >= 24)
+        if (elapsedHours >= 10 * 24)
+        {
+            return 0.15f;
+        }
+        if (elapsedHours >= 5 * 24)
         {
             return 0.1f;
         }
