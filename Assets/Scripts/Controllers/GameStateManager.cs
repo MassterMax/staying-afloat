@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
+    private const int START_SAVE = 24 * 9;
     [SerializeField] GameObject explosionPrefab;
     private const string GAME_SCENE_NAME = "Game";
     private const string START_SCENE_NAME = "Start";
@@ -24,6 +25,14 @@ public class GameStateManager : MonoBehaviour
     HyperJumpController hyperJumpController;
     TimeController timeController;
 
+    // saved state
+    bool saved = false;
+    private int savedHP;
+    private float savedEnergy;
+    private float savedDistance;
+    private float savedElapsedRealSeconds;
+    private int savedLastReportedGameHours;
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Called OnSceneLoaded");
@@ -33,15 +42,18 @@ public class GameStateManager : MonoBehaviour
             uiManager = FindAnyObjectByType<UIManager>();
             statsManager = FindAnyObjectByType<StatsManager>();
             blackHoleController = FindAnyObjectByType<BlackHoleController>();
+
+            // unsubscribe from previous timeController (if any) then subscribe to the new one
+            // if (timeController != null)
+            //     timeController.LastReportedGameHoursUpdated -= HandleLastReportedGameHoursUpdated;
             timeController = FindAnyObjectByType<TimeController>();
             timeController.LastReportedGameHoursUpdated += HandleLastReportedGameHoursUpdated;
-            AllStatsContainer.Instance.ResetStats();
-            // ResumeGame();
             StartGame();
         }
         else if (scene.name == START_SCENE_NAME)
         {
             Debug.Log("Called OnSceneLoaded in START_SCENE_NAME");
+            // saved = false;
         }
         hyperJumpController = FindAnyObjectByType<HyperJumpController>();
     }
@@ -75,6 +87,15 @@ public class GameStateManager : MonoBehaviour
             if (canReturn && Input.anyKeyDown)
             {
                 LoadStart();
+                // if (saved)
+                // {
+                //     Debug.Log("Load save!");
+                //     LoadLastSave();
+                // }
+                // else
+                // {
+                //     LoadStart();
+                // }
             }
             return;
         }
@@ -102,6 +123,7 @@ public class GameStateManager : MonoBehaviour
 
     public void FlyAway(Action action)
     {
+        saved = false;
         end = true;
         hyperJumpController.DoHyperJump(() =>
         {
@@ -133,6 +155,11 @@ public class GameStateManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    private void LoadLastSave()
+    {
+        SceneManager.LoadScene(GAME_SCENE_NAME);
+    }
+
     void HandlePause()
     {
         paused = !paused;
@@ -159,7 +186,24 @@ public class GameStateManager : MonoBehaviour
 
     void StartGame()
     {
-        ShowDayPage(1);
+        if (saved)
+        {
+            Debug.Log("got saved state!");
+            AllStatsContainer.Instance.ResetStats();
+            timeController.LoadSave(savedElapsedRealSeconds, savedLastReportedGameHours);
+            statsManager.LoadSave(savedDistance, savedEnergy, savedHP);
+            paused = false;
+            readingPage = false;
+            Time.timeScale = 1f;
+            OnPauseStateChanged?.Invoke();
+        }
+        else
+        {
+            statsManager.Reset();
+            timeController.Reset();
+            ShowDayPage(1);
+            AllStatsContainer.Instance.ResetStats();
+        }
     }
 
     void ShowDayPage(int i)
@@ -181,9 +225,24 @@ public class GameStateManager : MonoBehaviour
         {
             ShowDayPage(3);
         }
-        if (timeController.GetLastReportedGameHours() == 24 * 4)
+        if (timeController.GetLastReportedGameHours() == 24 * 5)
         {
-            ShowDayPage(5);
+            ShowDayPage(6);
+        }
+        if (timeController.GetLastReportedGameHours() == 24 * 8)
+        {
+            ShowDayPage(9);
+        }
+
+        if (timeController.GetLastReportedGameHours() >= 24 * 9 && (timeController.GetLastReportedGameHours() + 24) % (24 * 10) == 0)
+        {
+            Debug.Log("save state!");
+            savedElapsedRealSeconds = timeController.ElapsedRealSeconds;
+            savedLastReportedGameHours = timeController.LastReportedGameHours;
+            savedEnergy = statsManager.Energy;
+            savedDistance = statsManager.Distance;
+            savedHP = statsManager.CurrentHp;
+            saved = true;
         }
     }
 

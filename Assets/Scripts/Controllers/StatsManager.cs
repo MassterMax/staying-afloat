@@ -22,6 +22,7 @@ public class StatsManager : MonoBehaviour
     public float Energy => energy;
     public float EnergyIncrease => energyIncrease;
     public float Distance => distance;
+    public int CurrentHp => currentHP;
     public float RealDistanceIncrease => realDistanceIncrease;
     // public float Health => health;
     // public int PlayerScore => playerScore;
@@ -71,13 +72,6 @@ public class StatsManager : MonoBehaviour
         baseDistanceIncrease = amount;
     }
 
-    void Reset()
-    {
-        energy = AllStatsContainer.Instance.StartEnergy;
-        distance = AllStatsContainer.Instance.StartDistance;
-        currentHP = AllStatsContainer.Instance.MaxHp;
-        uiManager.ShowHP(currentHP);
-    }
 
     void Awake()
     {
@@ -87,13 +81,13 @@ public class StatsManager : MonoBehaviour
     }
     void Start()
     {
-        Reset();
-        OnEnergyChanged?.Invoke();
-        OnEnergyIncreaseChanged?.Invoke();
-        OnDistanceChanged?.Invoke();
+        // Reset();
+        // OnEnergyChanged?.Invoke();
+        // OnEnergyIncreaseChanged?.Invoke();
+        // OnDistanceChanged?.Invoke();
 
-        realDistanceIncrease = CalculateRealDistanceIncrease();
-        OnDistanceIncreaseChanged?.Invoke();
+        // realDistanceIncrease = CalculateRealDistanceIncrease();
+        // OnDistanceIncreaseChanged?.Invoke();
     }
 
     void OnEnable()
@@ -180,5 +174,29 @@ public class StatsManager : MonoBehaviour
     public void IncreaseEnergyDebug()
     {
         AddEnergy(100);
+    }
+
+    public void LoadSave(float _distance, float _energy, int _hp)
+    {
+        distance = _distance;
+        energy = _energy;
+        currentHP = _hp;
+
+        uiManager.ShowHP(currentHP);
+        OnEnergyChanged?.Invoke();
+        OnEnergyIncreaseChanged?.Invoke();
+        OnDistanceChanged?.Invoke();
+
+        realDistanceIncrease = CalculateRealDistanceIncrease();
+        OnDistanceIncreaseChanged?.Invoke();
+    }
+
+    public void Reset()
+    {
+        energy = AllStatsContainer.Instance.StartEnergy;
+        distance = AllStatsContainer.Instance.StartDistance;
+        currentHP = AllStatsContainer.Instance.MaxHp;
+
+        LoadSave(distance, energy, currentHP);
     }
 }

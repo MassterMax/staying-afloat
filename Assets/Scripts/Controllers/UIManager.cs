@@ -126,7 +126,7 @@ public class UIManager : MonoBehaviour
 
     void UpdateDistanceIncreaseUI()
     {
-        Debug.Log("Updating distance increase UI");
+        // Debug.Log("Updating distance increase UI");
         string distanceIncreaseSymbol = statsManager.RealDistanceIncrease > 0 ? "+" : "";
         distanceIncreaseText.text = distanceIncreaseSymbol + statsManager.RealDistanceIncrease.ToString(FLOAT_VALUE_FORMAT) + INCREASE_FORMAT;
         if (Mathf.Approximately(statsManager.RealDistanceIncrease, 0f))

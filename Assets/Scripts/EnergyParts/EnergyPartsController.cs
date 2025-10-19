@@ -66,7 +66,7 @@ public class EnergyPartsController : MonoBehaviour
 
         totalIncrease += AllStatsContainer.Instance.SolarPanelRestoreRate;
 
-        Debug.Log("Setting energy increase: " + totalIncrease);
+        // Debug.Log("Setting energy increase: " + totalIncrease);
         statsManager.SetEnergyIncrease(totalIncrease);
     }
 

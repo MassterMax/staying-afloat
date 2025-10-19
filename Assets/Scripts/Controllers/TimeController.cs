@@ -4,10 +4,13 @@ using UnityEngine;
 public class TimeController : MonoBehaviour
 {
     // elapsed real seconds since timer started
-    private float elapsedRealSeconds = 0f;
+    private float elapsedRealSeconds;
     // last reported total game hours (integer)
-    private int lastReportedGameHours = -1;
+    private int lastReportedGameHours;
     private bool running = false;
+
+    public float ElapsedRealSeconds => elapsedRealSeconds;
+    public int LastReportedGameHours => lastReportedGameHours;
 
     UIManager uiManager;
     public event Action LastReportedGameHoursUpdated;
@@ -21,12 +24,18 @@ public class TimeController : MonoBehaviour
     {
         // if (startOnAwake)
         //     StartTimer();
-        StartTimer();
+
     }
 
     void Update()
     {
         if (!running) return;
+
+        // debug
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            elapsedRealSeconds += 10f;
+        }
 
         elapsedRealSeconds += Time.deltaTime;
         // 1 real sec == 1 game hour
@@ -36,14 +45,12 @@ public class TimeController : MonoBehaviour
         {
             lastReportedGameHours = totalGameHours;
             PushTimeToUI();
-            LastReportedGameHoursUpdated.Invoke();
+            LastReportedGameHoursUpdated?.Invoke();
         }
     }
 
     public void StartTimer()
     {
-        elapsedRealSeconds = 0f;
-        lastReportedGameHours = -1;
         running = true;
         // immediate update to show Day 1 — 00:00
         PushTimeToUI();
@@ -62,5 +69,17 @@ public class TimeController : MonoBehaviour
     public int GetLastReportedGameHours()
     {
         return lastReportedGameHours;
+    }
+
+    public void LoadSave(float _elapsedRealSeconds, int _lastReportedGameHours)
+    {
+        elapsedRealSeconds = _elapsedRealSeconds;
+        lastReportedGameHours = _lastReportedGameHours;
+        StartTimer();
+    }
+
+    public void Reset()
+    {
+        LoadSave(0f, -1);
     }
 }
