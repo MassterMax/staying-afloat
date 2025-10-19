@@ -68,17 +68,32 @@ public class EventManager : MonoBehaviour
     void CreateEvent()
     {
         Debug.Log("Event Created");
+        bool created = false;
         float t = Random.Range(0f, 1f);
         if (t < AllStatsContainer.Instance.GetAsteroidChance(timeController.GetLastReportedGameHours()))
+        {
             SpawnAsteroid();
+            created = true;
+        }
 
         t = Random.Range(0f, 1f);
         if (t < AllStatsContainer.Instance.GetBoxChance(timeController.GetLastReportedGameHours()))
+        {
             SpawnBox();
+            created = true;
+        }
 
         t = Random.Range(0f, 1f);
         if (t < AllStatsContainer.Instance.GetGoldenBoxChance(timeController.GetLastReportedGameHours()))
+        {
             SpawnGoldenBox();
+            created = true;
+        }
+
+        if (!created)
+        {
+            SpawnBox();
+        }
     }
 
     void SpawnAsteroid()

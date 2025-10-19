@@ -15,9 +15,9 @@ public class AllStatsContainer : MonoBehaviour
     private float startDistance = 100;
     private float maxEngineEnergyCost = 4f;
     private float engineEnergyCoef = 1.5f;
-    private float maxEngineSpeed = 5f; // maximum speed of the engine
+    private float maxEngineSpeed = 8f; // maximum speed of the engine
     private float hookSpeed = 10f;
-    float defaultSliderValue = 0.4f;
+    float defaultSliderValue = 0.25f;
     private float hookEnergyCost = 5f; // energy cost per hook launch
     private float gunEnergyCost = 3f; // energy cost per gun shot
     private float gunShotDelay = 0.1f; // delay between gun shots
@@ -110,7 +110,7 @@ public class AllStatsContainer : MonoBehaviour
 
     public float TimeBetweenEventsMinus(int elapsedHours)
     {
-        float baseSpeed = -0.1f * (elapsedHours / 24); // increases by -0.1f every 24 hours
+        float baseSpeed = -0.2f * (elapsedHours / 24); // increases by -0.1f every 24 hours
         return baseSpeed;
     }
 
@@ -169,11 +169,11 @@ public class AllStatsContainer : MonoBehaviour
     {
         if (elapsedHours >= 10 * 24)
         {
-            return 0.3f;
+            return 0.2f;
         }
         if (elapsedHours >= 5 * 24)
         {
-            return 0.15f;
+            return 0.1f;
         }
         return startGoldenBoxChance;
     }

@@ -316,7 +316,7 @@ public class GameStateManager : MonoBehaviour
             ShowDayPage(9);
         }
 
-        if (timeController.GetLastReportedGameHours() >= 24 * 9 && (timeController.GetLastReportedGameHours() + 24) % (24 * 10) == 0)
+        if (timeController.GetLastReportedGameHours() >= 24 * 9 && (timeController.GetLastReportedGameHours() + 24) % (24 * 5) == 0)
         {
             Debug.Log("save state!");
             savedElapsedRealSeconds = timeController.ElapsedRealSeconds;
