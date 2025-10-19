@@ -74,6 +74,7 @@ public class UIManager : MonoBehaviour
         UpdateGunImage();
         losePanel.SetActive(false);
         winPanel.SetActive(false);
+        pausePanel.SetActive(false);
 
         energySlider.value = AllStatsContainer.Instance.DefaultSliderValue;
         flyButton.interactable = false;

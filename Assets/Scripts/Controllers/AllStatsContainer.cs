@@ -6,8 +6,8 @@ public class AllStatsContainer : MonoBehaviour
     private int startMaxHP = 3;
     // current stats
     private int maxHP = 3;
-    private float gunConsumptionRate = 1f; // Energy consumed per second when the gun is on
-    private float hookConsumptionRate = 1f; // Energy consumed per second when the hook is on
+    private float gunConsumptionRate = 0.5f; // Energy consumed per second when the gun is on
+    private float hookConsumptionRate = 0.5f; // Energy consumed per second when the hook is on
     private float solarPanelRestoreRate = 2f; // Energy restored per second by the solar panel
     private float maxEnergy = 2000;
     private float startEnergy = 100;
@@ -18,7 +18,7 @@ public class AllStatsContainer : MonoBehaviour
     private float hookSpeed = 10f;
     float defaultSliderValue = 0.4f;
     private float hookEnergyCost = 5f; // energy cost per hook launch
-    private float gunEnergyCost = 5f; // energy cost per gun shot
+    private float gunEnergyCost = 3f; // energy cost per gun shot
     private float gunShotDelay = 0.5f; // delay between gun shots
     private float hookExtraDistance = 1f; // extra distance added to hook target point
     private float gunShotSpeed = 15f;
