@@ -68,6 +68,8 @@ public class GameStateManager : MonoBehaviour
         {
             Debug.Log("Called OnSceneLoaded in START_SCENE_NAME");
             // saved = false;
+            PlayMusic();
+            SetMusicPitch(1f);
         }
         hyperJumpController = FindAnyObjectByType<HyperJumpController>();
     }
@@ -437,5 +439,20 @@ public class GameStateManager : MonoBehaviour
     public float GetVolume(bool sfx)
     {
         return audioManager.GetVolume(sfx);
+    }
+
+    public void SetMusicPitch(float value)
+    {
+        audioManager.SetMusicPitch(value);
+    }
+
+    public void PauseMusic()
+    {
+        audioManager.PauseMusic();
+    }
+
+    public void PlayMusic()
+    {
+        audioManager.PlayMusic();
     }
 }

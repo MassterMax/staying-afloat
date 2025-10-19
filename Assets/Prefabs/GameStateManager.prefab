@@ -93,3 +93,7 @@ MonoBehaviour:
     name: bh
     audioClip: {fileID: 8300000, guid: 30b5ef3155ee53c4e8522d01dfca41ff, type: 3}
     source: {fileID: 0}
+  musicClip:
+    name: spaceMusic
+    audioClip: {fileID: 8300000, guid: 284f27b81f234ab4fa1fee48f5f51df6, type: 3}
+    source: {fileID: 0}

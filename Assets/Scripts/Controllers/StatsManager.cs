@@ -120,8 +120,24 @@ public class StatsManager : MonoBehaviour
             OnDistanceIncreaseChanged?.Invoke();
         }
         distance += realDistanceIncrease * Time.fixedDeltaTime;
+
+        if (distance > 60)
+        {
+            GameStateManager.Instance.SetMusicPitch(1f);
+        }
+        else if (distance > 30)
+        {
+            GameStateManager.Instance.SetMusicPitch(1.5f);
+        }
+        else if (distance > 0)
+        {
+            GameStateManager.Instance.SetMusicPitch(2f);
+        }
+
+
         if (distance < 0 && !lost)
         {
+            GameStateManager.Instance.PauseMusic();
             GameStateManager.Instance.StopPlayBH();
             lost = true;
             distance = 0;
@@ -179,6 +195,7 @@ public class StatsManager : MonoBehaviour
         if (currentHP == 0)
         {
             Debug.Log("Explode!");
+            GameStateManager.Instance.PauseMusic();
             GameStateManager.Instance.LoseExplosion();
         }
     }
